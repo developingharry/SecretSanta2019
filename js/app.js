@@ -1,8 +1,6 @@
-function Santa(name,giftee) {
+function Santa(name) {
     var self = this;
-
     self.name = ko.observable(name);
-    self.giftee = ko.observable(giftee);   
 }
 
 
@@ -15,7 +13,7 @@ var ViewModel = function() {
 	self.giftees = ko.observableArray([]);
 
 	self.addSanta = function() {
-        self.santas.push(new Santa("",""));
+        self.santas.push(new Santa(""));
     };
 
 	self.shuffle = function(a) {
@@ -30,35 +28,43 @@ var ViewModel = function() {
 	  return a;
 	}
 
- //    self.checkShuffle = function() {
- // 		var length = self.santas().length;
- //  		matchesFound = false;
- //  		for (var i = 0; i < length; i++) {
- //    		if (self.santas[i].name == self.giftees[i].name) {
- //      		matchesFound = true;
- //    		}
- //  		}
-	// }
 
-	// self.shuffleTilCorrect = function() {
-	// 	console.log("shuffleTil correct startyin");
- // 		self.shuffle(self.giftees());
- //  		self.checkShuffle();
- //  		console.log(matchesFound);
- // 		while (matchesFound) {
- // 			console.log("shufflin");
- // 			self.giftees(self.shuffle(self.santas().slice()));
- // 			console.log("matchfound");
-	// 		checkShuffle();
- //  		}
-	// }
+	self.shuffleTilCorrect = function() {
+		console.log("shuffleTilCorrect Starting with initial shuffle");
+    	self.giftees(self.shuffle(self.santas().slice()));
+    	console.log("checking shuffle");
+  		self.checkShuffle();
+  		console.log(matchesFound + "matches found");
+ 		while (matchesFound) {
+ 			console.log("shuffling again");
+ 			self.giftees(self.shuffle(self.santas().slice()));
+ 			console.log("match found");
+			self.checkShuffle();
+  		}
+	}
+	
+	self.checkShuffle = function() {
+		var a = self.santas();
+		var b = self.giftees();
+		var length = self.santas().length;
+		matchesFound = false;
+		for (var i = 0; i<a.length; i++ ) {
+			console.log(a[i].name() + b[i].name());
+			if (a[i].name() === b[i].name()) {
+				console.log (a[i].name() + "matches" + b[i].name() + "so I'll need to shuffle again");
+				matchesFound = true;
+			}
+			console.log (i + a[i].name());
+		} 
+
+	}
 
     self.assignGiftees = function() {
     	// TODO: add mechanism to assign giftees
     	console.log("assigning giftees...");
+    	// self.checkShuffle();
     	self.giftees(self.shuffle(self.santas().slice()));
-
-		// self.shuffleTilCorrect();
+		self.shuffleTilCorrect();
     }
 };
  
