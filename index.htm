@@ -11,16 +11,20 @@
 	<tr>
 	<tbody data-bind="foreach: santas">
 	    <tr>
-	        <td><input data-bind="value: name" /></td>
+	        <td><input data-bind="value: name,
+	        						valueUpdate: 'keyup'" /></td>
 	    </tr>    
 	</tbody>
 </table>
 <button data-bind="click: addSanta">add another Santa</button>
+
+
+
 <hr>
 <button data-bind="click: assignGiftees">FINISHED</button>
 
 <h2>Results area</h2>
-<table>
+<table style = "float: left;">
 	<tbody data-bind="foreach: santas">
 	    <tr>
 	        <td data-bind="text: name"></td>
@@ -28,14 +32,16 @@
 	</tbody>
 </table>
 
-<h2>Testing whether array successfully cloned</h2>
-<table>
+<table style = "float: left;">
 	<tbody data-bind="foreach: giftees">
 	    <tr>
-	        <td data-bind="text: name"></td>
+	    	<td>'s Secret Santa target is </td>
+	        <td data-bind="text: name">!</td>
 	    </tr>    
 	</tbody>
 </table>
+
+
 
 </body>
 </html>
