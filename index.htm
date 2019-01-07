@@ -2,17 +2,22 @@
 <html>
 <head>
 	<title></title>
+
+
 </head>
 <body>
 <h1>Secret Santa Maker</h1>
 <table>
 	<tr>
-		<td>SANTA</td>
-	<tr>
+		<td>SANTAS</td>
+	</tr>
 	<tbody data-bind="foreach: santas">
 	    <tr>
 	        <td><input data-bind="value: name,
-	        						valueUpdate: 'keyup'" /></td>
+	        						valueUpdate: 'keyup'" /><a href="#" data-bind="click: $root.removeSanta">Remove Item</a>    <span data-bind='visible: name.hasError, text: name.validationMessage'> </span>
+</td>
+	        	
+
 	    </tr>    
 	</tbody>
 </table>
@@ -21,7 +26,9 @@
 
 
 <hr>
+<!-- ko if: santas().length > 1 && !anyErrors()-->
 <button data-bind="click: assignGiftees">FINISHED</button>
+<!-- /ko -->
 
 <h2>Results area</h2>
 <table style = "float: left;">
@@ -41,14 +48,10 @@
 	</tbody>
 </table>
 
-
-
 </body>
 </html>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-
-<!-- jQuery commented out until I know if I need it -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="js/app.js"></script>
