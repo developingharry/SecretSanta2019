@@ -1,108 +1,113 @@
-    var anyErrors = ko.observable(true);
+// global value to store validation errors from input fields.
+// this is so the submit button can be hidden until no errors.
+var anyErrors = ko.observable(true);
 
 ko.extenders.required = function(target, overrideMessage) {
     //add some sub-observables to our observable
     target.hasError = ko.observable();
     target.validationMessage = ko.observable();
 
- 
     //define a function to do validation
     function validate(newValue) {
-       target.hasError(newValue ? false : true);
-       target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
-       anyErrors(newValue ? false : true);
+        target.hasError(newValue ? false : true);
+        target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
+        anyErrors(newValue ? false : true);
     }
- 
+
     //initial validation
     validate(target());
- 
+
     //validate whenever the value changes
     target.subscribe(validate);
- 
+
     //return the original observable
     return target;
 };
 
+// prototype santa, or "gifter"
 function Santa(name) {
     var self = this;
-    // self.name = ko.observable(name);
 
-
-     self.name = ko.observable(name).extend({ required: "Please enter a first name" });
+    // extended observable to track name, and give error if one is not entered
+    self.name = ko.observable(name).extend({
+        required: "Please enter a first name"
+    });
 }
 
 
 
 var ViewModel = function() {
-	var self = this;
-	var anyBlanks = false;
-	var matchesFound = false;
+    var self = this;
 
-	self.santas = ko.observableArray([]);
+    // to track whether anyone has been matche with themself:
+    var matchesFound = false;
 
-	self.santaCount = ko.observable(self.santas().length);
+    self.santas = ko.observableArray([]);
 
-	self.giftees = ko.observableArray([]);
+    self.santaCount = ko.observable(self.santas().length);
 
-	self.addSanta = function() {
+    self.giftees = ko.observableArray([]);
+
+    self.addSanta = function() {
         self.santas.push(new Santa(""));
     };
 
-    self.removeSanta = function(data) { 
+    self.removeSanta = function(data) {
         self.santas.remove(data);
     };
 
-	self.shuffle = function(a) {
-	  var j, x, i;
-	  for (i = a.length - 1; i > 0; i--) {
-	    j = Math.floor(Math.random() * (i + 1));
-	    x = a[i];
-	    a[i] = a[j];
-	    a[j] = x;
-	  }
-	  console.log("shuffled");
-	  return a;
-	}
+    // a "Knuth" shuffle, for use and reuse as required
+    self.shuffle = function(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        console.log("shuffled");
+        return a;
+    }
 
+    // as name suggests, a function to keep calling shuffle until no matches found
+    self.shuffleTilCorrect = function() {
+        console.log("shuffleTilCorrect Starting with initial shuffle");
+        // populate giftees array with a shuffled "slice" or clone of the santas array 
+        self.giftees(self.shuffle(self.santas().slice()));
+        console.log("checking shuffle");
+        self.checkShuffle();
+        console.log(matchesFound + "matches found");
+        while (matchesFound) {
+            console.log("shuffling again");
+            self.giftees(self.shuffle(self.santas().slice()));
+            console.log("match found");
+            self.checkShuffle();
+        }
+    }
 
-	self.shuffleTilCorrect = function() {
-		console.log("shuffleTilCorrect Starting with initial shuffle");
-    	self.giftees(self.shuffle(self.santas().slice()));
-    	console.log("checking shuffle");
-  		self.checkShuffle();
-  		console.log(matchesFound + "matches found");
- 		while (matchesFound) {
- 			console.log("shuffling again");
- 			self.giftees(self.shuffle(self.santas().slice()));
- 			console.log("match found");
-			self.checkShuffle();
-  		}
-	}
-	
-	self.checkShuffle = function() {
-		var a = self.santas();
-		var b = self.giftees();
-		var length = self.santas().length;
-		matchesFound = false;
-		for (var i = 0; i<a.length; i++ ) {
-			console.log(a[i].name() + b[i].name());
-			if (a[i].name() === b[i].name()) {
-				console.log (a[i].name() + "matches" + b[i].name() + "so I'll need to shuffle again");
-				matchesFound = true;
-			}
-			console.log (i + a[i].name());
-		} 
+    self.checkShuffle = function() {
+    	// compare the two arrays (gifters and giftees) with a fairly simple loop
+        var a = self.santas();
+        var b = self.giftees();
+        var length = self.santas().length;
+        matchesFound = false;
+        for (var i = 0; i < a.length; i++) {
+            console.log(a[i].name() + b[i].name());
+            if (a[i].name() === b[i].name()) {
+                console.log(a[i].name() + "matches" + b[i].name() + "so I'll need to shuffle again");
+                matchesFound = true;
+            }
+            console.log(i + a[i].name());
+        }
 
-	}
+    }
 
     self.assignGiftees = function() {
-    	// TODO: add mechanism to assign giftees
-    	console.log("assigning giftees...");
-    	// self.checkShuffle();
-    	console.log("removing blanks");
-    	self.giftees(self.shuffle(self.santas().slice()));
-		self.shuffleTilCorrect();
+    	// initial shuffle before testing
+        self.giftees(self.shuffle(self.santas().slice()));
+        // shuffle and test
+        self.shuffleTilCorrect();
     }
 };
- 
+
 ko.applyBindings(new ViewModel());

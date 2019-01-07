@@ -1,57 +1,48 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-
-
-</head>
-<body>
-<h1>Secret Santa Maker</h1>
-<table>
-	<tr>
-		<td>SANTAS</td>
-	</tr>
-	<tbody data-bind="foreach: santas">
-	    <tr>
-	        <td><input data-bind="value: name,
-	        						valueUpdate: 'keyup'" /><a href="#" data-bind="click: $root.removeSanta">Remove Item</a>    <span data-bind='visible: name.hasError, text: name.validationMessage'> </span>
-</td>
-	        	
-
-	    </tr>    
-	</tbody>
-</table>
-<button data-bind="click: addSanta">add another Santa</button>
-
-
-
-<hr>
-<!-- ko if: santas().length > 1 && !anyErrors()-->
-<button data-bind="click: assignGiftees">FINISHED</button>
-<!-- /ko -->
-
-<h2>Results area</h2>
-<table style = "float: left;">
-	<tbody data-bind="foreach: santas">
-	    <tr>
-	        <td data-bind="text: name"></td>
-	    </tr>    
-	</tbody>
-</table>
-
-<table style = "float: left;">
-	<tbody data-bind="foreach: giftees">
-	    <tr>
-	    	<td>'s Secret Santa target is </td>
-	        <td data-bind="text: name">!</td>
-	    </tr>    
-	</tbody>
-</table>
-
-</body>
+<html lang="en">
+    <head>
+        <title>Secret Santa Maker</title>
+    </head>
+    <body>
+        <h1>Secret Santa Maker</h1>
+        <table>
+            <tr>
+                <td>SANTAS</td>
+            </tr>
+            <tbody data-bind="foreach: santas">
+                <tr>
+                    <td><input data-bind="value: name,
+	        						valueUpdate: 'keyup'"/><a href="#" data-bind="click: $root.removeSanta">Remove Item</a>
+	        			<!-- error message line, to be shown if field has no content -->
+                        <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button data-bind="click: addSanta">add another Santa</button>
+        <hr>
+        <!-- ko if: santas().length > 1 && !anyErrors()-->
+        <button data-bind="click: assignGiftees">FINISHED</button>
+        <!-- /ko -->
+        <h2>Results area</h2>
+        <table style="float: left;">
+            <tbody data-bind="foreach: santas">
+                <tr>
+                    <td data-bind="text: name"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="float: left;">
+            <tbody data-bind="foreach: giftees">
+                <tr>
+                    <td>'s Secret Santa target is
+                    </td>
+                    <td data-bind="text: name">!</td>
+                </tr>
+            </tbody>
+        </table>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="js/app.js"></script>
+    </body>
 </html>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script src="js/app.js"></script>
