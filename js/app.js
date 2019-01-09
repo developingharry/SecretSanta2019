@@ -32,6 +32,12 @@ function Santa(name) {
     self.name = ko.observable(name).extend({
         required: "Please enter a first name"
     });
+
+    // testing encryption
+
+    self.giftee = ko.observable();
+
+    self.encryptedGiftee = ko.observable();
 }
 
 
@@ -42,7 +48,9 @@ var ViewModel = function() {
     // to track whether anyone has been matche with themself:
     var matchesFound = false;
 
-    self.santas = ko.observableArray([]);
+    self.santas = ko.observableArray([
+        new Santa("e.g. Sandra in Accounting")
+    ]);
 
     self.santaCount = ko.observable(self.santas().length);
 
