@@ -24,29 +24,50 @@
             </tbody>
         </table>
         <button data-bind="click: addSanta">add another Santa</button>
-        <hr>
         <!-- ko if: santas().length > 1 && !anyErrors()-->
         <button data-bind="click: assignGiftees">FINISHED</button>
         <!-- /ko -->
-        <h2>Results area</h2>
-        <table style="float: left;">
+        <hr>
+
+
+
+        <h2>Public results area</h2>
+        <table>
+        	<tr>
+        		<td>name</td><td>giftee</td>
+        	</tr>
             <tbody data-bind="foreach: santas">
                 <tr>
                     <td data-bind="text: name"></td>
-                    <td data-bind="text: encName"></td>
-                    <td data-bind="text: unEncName"></td>
+                    <td data-bind="text: giftee"></td>
                 </tr>
             </tbody>
         </table>
-        <table style="float: left;">
-            <tbody data-bind="foreach: giftees">
+<hr>
+        <h2>Secret results area</h2>
+                <table>
+                	<tr>
+                		<td>name</td><td>giftee</td><td>encGiftee</td><td>unEnc</td>
+                	</tr>
+            <tbody data-bind="foreach: santas">
                 <tr>
-                    <td>'s Secret Santa target is
-                    </td>
-                    <td data-bind="text: name">!</td>
+                    <td data-bind="text: name"></td>
+                    <td data-bind="text: giftee"></td>
+                    <td data-bind="text: encGiftee"></td>
+                    <td data-bind="text: unEncGiftee"></td>
                 </tr>
             </tbody>
         </table>
+
+
+
+
+
+
+
+
+
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

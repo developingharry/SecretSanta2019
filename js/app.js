@@ -33,17 +33,16 @@ function Santa(name) {
         required: "Please enter a first name"
     });
 
-    // testing encryption
-    // self.encName = ko.observable(window.btoa(self.name()));
-    // self.unEncName = ko.observable(window.atob(self.encName()));
+    self.giftee = ko.observable();
 
-    self.encName = ko.computed(function() {
-        return window.btoa(self.name());
+    self.encGiftee = ko.computed(function() {
+        return window.btoa(self.giftee());
     }, self);
 
-    self.unEncName = ko.computed(function() {
-        return window.atob(self.encName());
+    self.unEncGiftee = ko.computed(function() {
+        return window.atob(self.encGiftee());
     }, self);
+
 }
 
 
@@ -97,13 +96,19 @@ var ViewModel = function() {
             console.log("match found");
             self.checkShuffle();
         }
-    }
+
+        var a = self.santas();
+        var b = self.giftees();
+        for (var i = 0; i < a.length; i++) {
+        	a[i].giftee(b[i].name());
+        }
+}
+
 
     self.checkShuffle = function() {
     	// compare the two arrays (gifters and giftees) with a fairly simple loop
         var a = self.santas();
         var b = self.giftees();
-        var length = self.santas().length;
         matchesFound = false;
         for (var i = 0; i < a.length; i++) {
             console.log(a[i].name() + b[i].name());
