@@ -34,10 +34,16 @@ function Santa(name) {
     });
 
     // testing encryption
+    // self.encName = ko.observable(window.btoa(self.name()));
+    // self.unEncName = ko.observable(window.atob(self.encName()));
 
-    self.giftee = ko.observable();
+    self.encName = ko.computed(function() {
+        return window.btoa(self.name());
+    }, self);
 
-    self.encryptedGiftee = ko.observable();
+    self.unEncName = ko.computed(function() {
+        return window.atob(self.encName());
+    }, self);
 }
 
 
