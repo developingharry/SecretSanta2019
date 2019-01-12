@@ -1,7 +1,28 @@
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+// basic encryption system using Base64
+function encrypt(name) {
+	return window.btoa(name);
+}
+
+function decrypt(name) {
+	return window.atob(name);
+}
+
 // global value to store validation errors from input fields.
 // this is so the submit button can be hidden until no errors.
 var anyErrors = ko.observable(true);
 
+// validation for fields - code transcribed from the knockout documentation
 ko.extenders.required = function(target, overrideMessage) {
     //add some sub-observables to our observable
     target.hasError = ko.observable();
@@ -36,11 +57,15 @@ function Santa(name) {
     self.giftee = ko.observable();
 
     self.encGiftee = ko.computed(function() {
-        return window.btoa(self.giftee());
+        return encrypt(self.giftee());
     }, self);
 
     self.unEncGiftee = ko.computed(function() {
-        return window.atob(self.encGiftee());
+        return decrypt(self.encGiftee());
+    }, self);
+
+    self.secretUrl = ko.computed(function() {
+    	return ("index2.htm?santa=" + self.name() + "&giftee=" + self.encGiftee());
     }, self);
 
 }
@@ -54,7 +79,7 @@ var ViewModel = function() {
     var matchesFound = false;
 
     self.santas = ko.observableArray([
-        new Santa("e.g. Sandra in Accounting")
+        new Santa("")
     ]);
 
     self.santaCount = ko.observable(self.santas().length);
