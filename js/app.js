@@ -65,7 +65,7 @@ function Santa(name) {
     }, self);
 
     self.secretUrl = ko.computed(function() {
-    	return ("index2.htm?santa=" + self.name() + "&giftee=" + self.encGiftee());
+    	return ("secretsanta.htm?santa=" + self.name() + "&giftee=" + self.encGiftee());
     }, self);
 
 }
@@ -89,6 +89,10 @@ var ViewModel = function() {
     self.addSanta = function() {
         self.santas.push(new Santa(""));
     };
+
+    self.resultsOption = ko.observable("showResults");
+
+    self.finished = ko.observable(false);
 
     self.removeSanta = function(data) {
         self.santas.remove(data);
@@ -151,6 +155,7 @@ var ViewModel = function() {
         self.giftees(self.shuffle(self.santas().slice()));
         // shuffle and test
         self.shuffleTilCorrect();
+        self.finished(true);
     }
 };
 

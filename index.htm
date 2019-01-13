@@ -1,73 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Secret Santa Maker</title>
-    </head>
-    <body>
-        <h1>Secret Santa Maker</h1>
-        <table>
+
+<head>
+    <title>Secret Santa Maker</title>
+</head>
+
+<body>
+
+<span data-bind='visible: !getQueryVariable("santa")'>
+    <h1>Secret Santa Maker</h1>
+    <table>
+        <tr>
+            <td>SANTAS</td>
+        </tr>
+        <tbody data-bind="foreach: santas">
             <tr>
-                <td>SANTAS</td>
+                <td><input data-bind="value: name,
+	        						valueUpdate: 'keyup'" />
+                    <img src="img/bin.png" width="15px" height="15px" alt="remove item" data-bind="click: $root.removeSanta">
+                    <!-- error message line, to be shown if field has no content -->
+                    <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
+                </td>
             </tr>
-            <tbody data-bind="foreach: santas">
-                <tr>
-                    <td><input data-bind="value: name,
-	        						valueUpdate: 'keyup'"/>
-	        						<!-- <a href="#" data-bind="click: $root.removeSanta">Remove Item</a> -->
-	        						<img src="img/bin.png" width = "15px" height = "15px"
-	        								alt="remove item"
-	        								data-bind="click: $root.removeSanta">
-	        			<!-- error message line, to be shown if field has no content -->
-                        <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button data-bind="click: addSanta">add another Santa</button>
-        <!-- ko if: santas().length > 1 && !anyErrors()-->
-        <button data-bind="click: assignGiftees">FINISHED</button>
-        <!-- /ko -->
-        <hr>
-
-
-
-        <h2>Public results area</h2>
-        <b data-bind="foreach: santas">
-        	<i data-bind="text:name"></i> will be buying for <i data-bind="text: giftee"></i></br>
-        </b>
-<hr>
-        <h2>Secret results area</h2>
-
-        <p data-bind="foreach: santas">
-        	Send <b data-bind="text: name"></b> this link <a data-bind="attr: { href: secretUrl}">secret link for <b data-bind="text: name"></b></a></br>
+        </tbody>
+    </table>
+    <button data-bind="click: addSanta">add another Santa</button>
+    <br>
+    <h3>How would you like this to be set up?  See the results, or keep them super secret so you can join in too?</h3>
+    <p>
+             <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results<br>
+          <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
         </p>
-<!--                 <table>
-                	<tr>
-                		<td>name</td><td>giftee</td><td>encGiftee</td><td>unEnc</td>
-                	</tr>
-            <tbody data-bind="foreach: santas">
-                <tr>
-                    <td data-bind="text: name"></td>
-                    <td data-bind="text: giftee"></td>
-                    <td data-bind="text: encGiftee"></td>
-                    <td data-bind="text: unEncGiftee"></td>
-                </tr>
-            </tbody>
-        </table> -->
 
 
 
 
 
 
+    <!-- ko if: santas().length > 1 && !anyErrors()-->
+    <button data-bind="click: assignGiftees">FINISHED</button>
+    <!-- /ko -->
+    <hr>
 
 
 
 
+    <!-- ko if: resultsOption()=="showResults" && finished() -->
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="js/app.js"></script>
+    <h2>Public results area</h2>
+    <b data-bind="foreach: santas">
+        	<i data-bind="text:name"></i> will be buying for <i data-bind="text: giftee"></i><br>
+        </b>
+    <hr>
+    <!-- /ko -->
+    <!-- ko if: resultsOption()=="hideResults" && finished() -->
 
-    </body>
+    <h2>Secret results area</h2>
+
+    <p data-bind="foreach: santas">
+        Send <b data-bind="text: name"></b> this link <a data-bind="attr: { href: secretUrl}">secret link for <b data-bind="text: name"></b></a><br>
+    </p>
+    <!-- /ko -->
+</span>
+
+<span data-bind='visible: getQueryVariable("santa")'>TODO: transpose secretsanta.htm into here and fix url</span>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
 </html>
