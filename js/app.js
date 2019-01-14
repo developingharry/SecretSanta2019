@@ -18,7 +18,7 @@ function decrypt(name) {
 	return window.atob(name);
 }
 
-// global value to store validation errors from input fields.
+// global variable to store validation errors from input fields.
 // this is so the submit button can be hidden until no errors.
 var anyErrors = ko.observable(true);
 
@@ -92,9 +92,12 @@ var ViewModel = function() {
 
     self.resultsOption = ko.observable("showResults");
 
+    self.santaGone = ko.observable(false);
+
     self.finished = ko.observable(false);
 
     self.removeSanta = function(data) {
+        self.santaGone(true);
         self.santas.remove(data);
     };
 
@@ -131,8 +134,7 @@ var ViewModel = function() {
         for (var i = 0; i < a.length; i++) {
         	a[i].giftee(b[i].name());
         }
-}
-
+    }
 
     self.checkShuffle = function() {
     	// compare the two arrays (gifters and giftees) with a fairly simple loop
@@ -147,7 +149,6 @@ var ViewModel = function() {
             }
             console.log(i + a[i].name());
         }
-
     }
 
     self.assignGiftees = function() {
@@ -156,6 +157,19 @@ var ViewModel = function() {
         // shuffle and test
         self.shuffleTilCorrect();
         self.finished(true);
+        self.santaGone(false);
+
+
+    }
+
+    // self.santaData = getQueryVariable("santa");
+
+    self.santaData = function() {
+        return decodeURIComponent(getQueryVariable("santa"));
+    }
+
+    self.gifteeData = function() {
+        return decrypt(getQueryVariable("giftee"));
     }
 };
 
