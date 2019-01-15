@@ -36,7 +36,7 @@
       <!-- /ko -->
       <hr>
 
-      <!-- ko if: resultsOption()=="showResults" && finished() && !santaGone() -->
+      <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
       <h2>Public results area</h2>
       <b data-bind="foreach: santas">
       <i data-bind="text:name"></i> will be buying for <i data-bind="text: giftee"></i><br>
@@ -44,7 +44,7 @@
       <hr>
       <!-- /ko -->
 
-      <!-- ko if: resultsOption()=="hideResults" && finished() && !santaGone() -->
+      <!-- ko if: resultsOption()=="hideResults" && finished() && !santaChange() -->
       <h2>Secret results area</h2>
       <p data-bind="foreach: santas">
          Send <b data-bind="text: name"></b> this link <a data-bind="attr: { href: secretUrl}" target="_blank">secret link for <b data-bind="text: name"></b></a><br>

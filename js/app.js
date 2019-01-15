@@ -88,18 +88,28 @@ var ViewModel = function() {
 
     self.addSanta = function() {
         self.santas.push(new Santa(""));
+        self.santaChange(true);
+
     };
 
     self.resultsOption = ko.observable("showResults");
 
-    self.santaGone = ko.observable(false);
+    // small tweak to avoid old results being accesible when amendments are made such as adding/removing santas
+    self.santaChange = ko.observable(false);
 
     self.finished = ko.observable(false);
 
     self.removeSanta = function(data) {
-        self.santaGone(true);
+        self.santaChange(true);
         self.santas.remove(data);
     };
+
+    self.cleanUrl = function() {
+        console.log("cleaning url");
+        var clean_url = location.protocol + "//" + location.host + location.pathname;
+        window.history.replaceState({}, document.title, clean_url);
+    };
+
 
     // a "Knuth" shuffle, for use and reuse as required
     self.shuffle = function(a) {
@@ -157,7 +167,7 @@ var ViewModel = function() {
         // shuffle and test
         self.shuffleTilCorrect();
         self.finished(true);
-        self.santaGone(false);
+        self.santaChange(false);
 
 
     }
