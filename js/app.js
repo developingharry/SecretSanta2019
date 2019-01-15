@@ -45,6 +45,7 @@ ko.extenders.required = function(target, overrideMessage) {
     return target;
 };
 
+
 // prototype santa, or "gifter"
 function Santa(name) {
     var self = this;
@@ -56,6 +57,8 @@ function Santa(name) {
 
     self.giftee = ko.observable();
 
+    self.budget = ko.observable(ViewModel.santaBudget);
+
     self.encGiftee = ko.computed(function() {
         return encrypt(self.giftee());
     }, self);
@@ -65,7 +68,8 @@ function Santa(name) {
     }, self);
 
     self.secretUrl = ko.computed(function() {
-    	return ("secretsanta.htm?santa=" + self.name() + "&giftee=" + self.encGiftee());
+        // return ("index.htm?santa=" + self.name() + "&giftee=" + self.encGiftee() + "&secret=true" + "&budget=" + self.budget());
+        return ("index.htm?santa=" + self.name() + "&giftee=" + self.encGiftee() + "&secret=true" + "&budget=" + ViewModel.santaBudget);
     }, self);
 
 }
@@ -75,7 +79,7 @@ function Santa(name) {
 var ViewModel = function() {
     var self = this;
 
-    // to track whether anyone has been matche with themself:
+    // to track whether anyone has been matched with themself:
     var matchesFound = false;
 
     self.santas = ko.observableArray([
@@ -84,12 +88,13 @@ var ViewModel = function() {
 
     self.santaCount = ko.observable(self.santas().length);
 
+    self.santaBudget = ko.observable();
+
     self.giftees = ko.observableArray([]);
 
     self.addSanta = function() {
         self.santas.push(new Santa(""));
         self.santaChange(true);
-
     };
 
     self.resultsOption = ko.observable("showResults");
@@ -177,10 +182,18 @@ var ViewModel = function() {
     self.santaData = function() {
         return decodeURIComponent(getQueryVariable("santa"));
     }
+    self.secretData = function() {
+        return getQueryVariable("secret");
+    }
+
+    self.showBudget = function() {
+        return decodeURIComponent(getQueryVariable("budget"));
+    }
 
     self.gifteeData = function() {
         return decrypt(getQueryVariable("giftee"));
     }
+ 
 };
 
 ko.applyBindings(new ViewModel());

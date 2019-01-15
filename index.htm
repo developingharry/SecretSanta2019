@@ -4,19 +4,18 @@
       <title>Secret Santa Maker</title>
    </head>
    <body>
-      <span>
+      <span data-bind="visible: !secretData()">
       <h1>Secret Santa Maker</h1>
-      <a href="#test">Jump to test</a>
-
       <table>
          <tr>
             <td>SANTAS</td>
          </tr>
+		What's the budget?
+         <input data-bind="textInput: ViewModel.santaBudget" /></p>
          <tbody data-bind="foreach: santas">
             <tr>
                <td>
-                  <input data-bind="value: name,
-                     valueUpdate: 'keyup'" />
+                  <input data-bind="value: name, valueUpdate: 'keyup'" />
                   <img src="img/bin.png" width="15px" height="15px" alt="remove item" data-bind="click: $root.removeSanta">
                   <!-- error message line, to be shown if field has no content -->
                   <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
@@ -51,12 +50,14 @@
       <p data-bind="foreach: santas">
          Send <b data-bind="text: name"></b> this link <a data-bind="attr: { href: secretUrl}" target="_blank">secret link for <b data-bind="text: name"></b></a><br>
       </p>
+      <hr>
       <!-- /ko -->
-      
-	  <h2 id="test">Chapter 4
-		      Hey <b data-bind="text: santaData()"></b> your giftee is <b data-bind="text: gifteeData()"></b></a><br>
+      </span>
 
-		    </h2>
+      <!-- ko if: secretData()-->
+	  <h2>Hey <b data-bind="text: santaData()"></b> your giftee is <b data-bind="text: gifteeData()"></b> and the budget is <b data-bind="text: showBudget()"></b></a><br>
+	  </h2>
+	  <!-- /ko -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="js/app.js"></script>
