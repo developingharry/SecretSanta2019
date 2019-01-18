@@ -4,6 +4,7 @@
       <title>Secret Santa Maker</title>
         <link rel="stylesheet" href="css/normalize.css">
   		<link rel="stylesheet" href="css/main.css">
+  		<link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
    </head>
    <body>
       <span data-bind="visible: !secretData()">
@@ -37,14 +38,12 @@
       <!-- ko if: santas().length > 1 && !anyErrors()-->
       <button data-bind="click: assignGiftees">FINISHED</button>
       <!-- /ko -->
-      <hr>
 
       <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
       <h2>Public results area</h2>
       <b data-bind="foreach: santas">
       <i data-bind="text:name"></i> will be buying for <i data-bind="text: giftee"></i><br>
       </b>
-      <hr>
       <!-- /ko -->
 
       <!-- ko if: resultsOption()=="hideResults" && finished() && !santaChange() -->
@@ -52,16 +51,24 @@
       <p data-bind="foreach: santas">
          Send <b data-bind="text: name"></b> this link <a data-bind="attr: { href: secretUrl}" target="_blank">secret link for <b data-bind="text: name"></b></a><br>
       </p>
-      <hr>
       <!-- /ko -->
       </span>
 
       <!-- ko if: secretData()-->
-	  <h2>Hey <b data-bind="text: santaData()"></b> your giftee is <b data-bind="text: gifteeData()"></b> and the budget is <b data-bind="text: showBudget()"></b></a><br>
-	  </h2>
+      <div id = "santaface">
+	  <hgroup class="speech-bubble">
+	<h1>Hey <span data-bind="text: santaData()"></span>!</h1>
+	<h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
+	<h2>Merry Xmas!</h2>
+	</hgroup>
+
+	  </div>
 	  <!-- /ko -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="js/app.js"></script>
+      <script src="js/copy.js"></script>
    </body>
 </html>
+
+<!-- Public Domain Santa Photo by bruce mars from Pexels -->

@@ -1,0 +1,46 @@
+body {
+
+ 	font-family: 'Aleo', serif;
+/* 	color: white;
+*/}
+
+.shadow {
+	text-shadow: 2px 2px black;
+}
+
+#santaface {
+	background-size: cover;
+	background-image: url("../img/santabg.jpg");
+	position: fixed;
+	left: 0;
+	top: 0;
+ 	width: 100vw;
+ 	height: 100vh;
+}
+
+.speech-bubble {
+    position: relative;
+    background: #ffffff;
+    border-radius: .4em;
+    margin-right: 60vw;
+    margin-left: 10vw;
+    margin-top: 20vw;
+    padding: 1px 10px 1px 10px;
+    text-align: center;
+  	filter: drop-shadow(0 0 30px #333);
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 25px solid transparent;
+	border-left-color: #ffffff;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -12.5px;
+	margin-right: -25px;
+}
