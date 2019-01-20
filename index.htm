@@ -1,87 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>Secret Santa Maker</title>
-        <link rel="stylesheet" href="css/normalize.css">
-  		<link rel="stylesheet" href="css/main.css">
-  		<link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
-   </head>
-   <body>
+<head>
+    <title>Secret Santa Maker</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
-      <span data-bind="visible: !secretData()">
-      <h1>Secret Santa Maker</h1>
-      <table>
-         <tr>
-            <td>SANTAS</td>
-         </tr>
-		What's the budget?
-         <input data-bind="textInput: ViewModel.santaBudget" /></p>
-         <tbody data-bind="foreach: santas">
+</head>
+
+<body>
+    <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
+    <span data-bind="visible: !secretData()">
+        <h1>Secret Santa Maker</h1>
+        <table>
             <tr>
-               <td>
-                  <input data-bind="value: name, valueUpdate: 'keyup'" />
-                  <img src="img/bin.png" width="15px" height="15px" alt="remove item" data-bind="click: $root.removeSanta">
-                  <!-- error message line, to be shown if field has no content -->
-                  <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
-               </td>
+                <td>SANTAS</td>
             </tr>
-         </tbody>
-      </table>
-      <button data-bind="click: addSanta">add another Santa</button>
-      <br>
+            What's the budget?
+            <input data-bind="textInput: ViewModel.santaBudget" /></p>
+            <tbody data-bind="foreach: santas">
+                <tr>
+                    <td>
+                        <input data-bind="value: name, valueUpdate: 'keyup'" />
+                        <img src="img/bin.png" width="15px" height="15px" alt="remove item" data-bind="click: $root.removeSanta">
+                        <!-- error message line, to be shown if field has no content -->
+                        <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button data-bind="click: addSanta">add another Santa</button>
+        <br>
 
-      <h3>How would you like this to be set up?  See the results, or keep them super secret so you can join in too?</h3>
-      <p>
-         <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results<br>
-         <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
-      </p>
+        <h3>How would you like this to be set up? See the results, or keep them super secret so you can join in too?</h3>
+        <p>
+            <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results<br>
+            <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
+        </p>
 
-      <!-- ko if: santas().length > 1 && !anyErrors()-->
-      <button data-bind="click: assignGiftees">FINISHED</button>
-      <!-- /ko -->
+        <!-- ko if: santas().length > 1 && !anyErrors()-->
+        <button data-bind="click: assignGiftees">FINISHED</button>
+        <!-- /ko -->
 
-      <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
-      <h2>Public results area</h2>
-      <b data-bind="foreach: santas">
-      <b data-bind="text:$index"></b>
-      <i data-bind="text: name"></i> will be buying for <i data-bind="text: giftee"></i>
-      <br>
-      </b>
+        <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
+        <h2>Public results area</h2>
+        <b data-bind="foreach: santas">
+            <i data-bind="text: name"></i> will be buying for <i data-bind="text: giftee"></i>
+            <br>
+        </b>
 
-      <!-- /ko -->
+        <!-- /ko -->
 
-      <!-- ko if: resultsOption()=="hideResults" && finished() && !santaChange() -->
-      <h2>Secret results area</h2>
-      <p data-bind="foreach: santas">
-         <span data-bind=" attr: {id: $index},
-                           text:secretUrl() + ' (Click to copy)',
+        <!-- ko if: resultsOption()=="hideResults" && finished() && !santaChange() -->
+        <h2>Secret results area</h2>
+        <h3>Please give the following links to each giftee. You can copy them to the clipboard just by clicking!</h3>
+        <p data-bind="foreach: santas">
+            <span data-bind="text: 'Send this one to ' + name() + ':'"></span>
+            <span data-bind=" attr: {id: $index},
+                           text:secretUrl(),
                            click: function(data, event) { copyUrl(data, event) }">
-         </span>
-         <br>
-      </p>
-      <!-- /ko -->
-      </span>
+            </span>
+            <br>
+            =============================================================================
+            <br>
+        </p>
+        <!-- /ko -->
+    </span>
 
-      <!-- ko if: secretData()-->
-      <div id = "santaface">
-	  <hgroup class="speech-bubble">
-	<h1>Hey <span data-bind="text: santaData()"></span>!</h1>
-	<h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
-	<h2>Merry Xmas!</h2>
-	</hgroup>
+    <!-- ko if: secretData()-->
+    <div id="santaface">
+        <hgroup class="speech-bubble">
+            <h1>Hey <span data-bind="text: santaData()"></span>!</h1>
+            <h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
+            <h2>Merry Xmas!</h2>
+        </hgroup>
 
+    </div>
+    <!-- /ko -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
 
-	  </div>
-	  <!-- /ko -->
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="js/app.js"></script>
-      <script src="js/copy.js"></script>
-   </body>
 </html>
 
 <!-- Public Domain Santa Photo by bruce mars from Pexels -->
