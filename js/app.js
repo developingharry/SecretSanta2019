@@ -68,9 +68,19 @@ function Santa(name) {
     }, self);
 
     self.secretUrl = ko.computed(function() {
-        // return ("index.htm?santa=" + self.name() + "&giftee=" + self.encGiftee() + "&secret=true" + "&budget=" + self.budget());
         return ("index.htm?santa=" + self.name() + "&giftee=" + self.encGiftee() + "&secret=true" + "&budget=" + ViewModel.santaBudget);
     }, self);
+
+    self.copyUrl = function(id) {
+        var elementId = id;
+        var hiddenInput = document.createElement("input");
+        hiddenInput.setAttribute("value", self.secretUrl());
+        document.body.appendChild(hiddenInput);
+        hiddenInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(hiddenInput);
+        alert("copied");
+    }
 
 }
 
@@ -86,7 +96,50 @@ var ViewModel = function() {
         new Santa("")
     ]);
 
+    // filtered copy of above array, showing only unique names.
+    // This is so that validation can check for duplicates
+
+
+
+
+
+
+    // self.uniqueSantas = ko.computed(function() {
+    //         var filteredArray = [];
+    //         var i;
+    //         $.each(self.santas(), function (index, item) {
+    //              var alreadyAdded = false;
+    //              for (i in filteredArray) {
+    //                   if (filteredArray[i].name == item.name) {
+    //                         console.log("i found a matching name within the list");
+    //                         alreadyAdded = true;
+    //                   }
+    //              }
+    //               if (!alreadyAdded) {
+    //                     console.log("looks fine to me boss");
+    //                    filteredArray.push(item);
+    //               }
+    //         });
+    //         return  filteredArray;
+
+    //     });
+
+
+    self.justSantaNames = ko.computed(function() {
+        var names = ko.utils.arrayMap(this.santas(), function(item) {
+        return item.name();
+    });
+    return names.sort();
+    }, self);
+
+
+    self.uniqueSantaNames = ko.dependentObservable(function() {
+    return ko.utils.arrayGetDistinctValues(self.justSantaNames()).sort();
+    }, self);
+
     self.santaCount = ko.observable(self.santas().length);
+
+    // self.uniqueCount = ko.observable(self.uniqueSantas().length);
 
     self.santaBudget = ko.observable();
 
@@ -167,12 +220,30 @@ var ViewModel = function() {
     }
 
     self.assignGiftees = function() {
-    	// initial shuffle before testing
+        var allSantas = self.justSantaNames().length;
+        var uniqueSantas = self.uniqueSantaNames().length;
+      if(allSantas == uniqueSantas) {
+                    // initial shuffle before testing
+        // console.log("there are " + self.santaCount() + "santas and " + self.uniqueCount() + " unique santas.");
+        // console.log("the santas are" + self.santas());
+        // console.log("the unique santas are" + self.uniqueSantas());
+        console.log("oh and these santas" + self.justSantaNames() + self.justSantaNames().length);
+        console.log("oh and these uniques" + self.uniqueSantaNames() + self.uniqueSantaNames().length);
+
         self.giftees(self.shuffle(self.santas().slice()));
         // shuffle and test
         self.shuffleTilCorrect();
         self.finished(true);
         self.santaChange(false);
+        } else {
+            alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
+        };
+    	// // initial shuffle before testing
+     //    self.giftees(self.shuffle(self.santas().slice()));
+     //    // shuffle and test
+     //    self.shuffleTilCorrect();
+     //    self.finished(true);
+     //    self.santaChange(false);
 
 
     }
@@ -193,7 +264,22 @@ var ViewModel = function() {
     self.gifteeData = function() {
         return decrypt(getQueryVariable("giftee"));
     }
- 
-};
+
+    self.copyToClipboard = function(event) {
+        // take the mouse target's id
+        alert(event.currentTarget.id);
+        // store it
+        var elementId = event.currentTarget.id;
+        // make a hidden input box for copying and pasting
+        var hiddenInput = document.createElement("input");
+        // fill it and remove it
+        hiddenInput.setAttribute("value", document.getElementById(elementId).innerHTML);
+        document.body.appendChild(hiddenInput);
+        hiddenInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(hiddenInput);
+        alert("copied");
+    } 
+ };
 
 ko.applyBindings(new ViewModel());
