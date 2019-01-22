@@ -6,8 +6,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 </head>
 
 <body>
@@ -40,20 +39,25 @@
             <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
         </p>
 
+        <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
+
         <!-- ko if: santas().length > 1 && !anyErrors()-->
-        <button data-bind="click: assignGiftees">FINISHED</button>
+        <button style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
         <!-- /ko -->
 
         <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
+        <div style="display: none" data-bind="visible:true">
         <h2>Public results area</h2>
         <b data-bind="foreach: santas">
             <i data-bind="text: name"></i> will be buying for <i data-bind="text: giftee"></i>
             <br>
         </b>
+        </div>
 
         <!-- /ko -->
 
-        <!-- ko if: resultsOption()=="hideResults" && finished() && !santaChange() -->
+        <!-- ko if: resultsOption() == 'hideResults' && finished() && !santaChange() -->
+        <div id="secretResults" style="display: none" data-bind="visible:true">
         <h2>Secret results area</h2>
         <h3>Please give the following links to each giftee. You can copy them to the clipboard just by clicking!</h3>
         <p data-bind="foreach: santas">
@@ -66,19 +70,21 @@
             =============================================================================
             <br>
         </p>
+        </div>
         <!-- /ko -->
     </span>
 
-    <!-- ko if: secretData()-->
-    <div id="santaface">
+    <!-- ko if: secretData() -->
+    <div id="santaface" style="display: none" data-bind="visible:true">
         <hgroup class="speech-bubble">
             <h1>Hey <span data-bind="text: santaData()"></span>!</h1>
             <h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
             <h2>Merry Xmas!</h2>
         </hgroup>
-
     </div>
     <!-- /ko -->
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

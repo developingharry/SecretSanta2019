@@ -231,11 +231,14 @@ var ViewModel = function() {
     self.gifteeData = function() {
         return decrypt(self.getQueryVariable("giftee"));
     }
+
     // simple method to display either the hidden, "secret" page, or the main submission page.
     // the information is again taken from the url.
     self.secretData = function() {
         return self.getQueryVariable("secret");
     }
+
+    self.showSecret = ko.observable(true);
 
     // function to show budget if it's been set, and a custom message if it hasn't.
     self.showBudget = function() {

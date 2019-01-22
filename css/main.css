@@ -2,7 +2,11 @@ body {
 
  	font-family: 'Aleo', serif;
 /* 	color: white;
-*/}
+
+*/
+
+
+}
 
 .shadow {
 	text-shadow: 2px 2px black;
@@ -17,6 +21,7 @@ body {
  	width: 100vw;
  	height: 100vh;
 }
+
 
 .speech-bubble {
     position: relative;
