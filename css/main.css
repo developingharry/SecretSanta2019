@@ -1,11 +1,23 @@
 body {
 
  	font-family: 'Aleo', serif;
-/* 	color: white;
+ 	color: white;
+  	text-shadow: 2px 2px BLACK;
+}
 
-*/
-
-
+html {
+    height: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background: #70bg32;
+    background-repeat:no-repeat;
+    background: -webkit-linear-gradient(to bottom right, #e83c5b, #63a55b);
+    background: -moz-linear-gradient(to bottom right, #e83c5b, #63a55b);
+    background: -ms-linear-gradient(to bottom right, #e83c5b, #63a55b);
+    background: -o-linear-gradient(to bottom right, #e83c5b, #63a55b);
+    background: linear-gradient(to bottom right, #e83c5b, #63a55b);
 }
 
 .shadow {
