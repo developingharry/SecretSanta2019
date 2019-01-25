@@ -1,8 +1,8 @@
 body {
 
  	font-family: 'Aleo', serif;
- 	color: white;
-  	text-shadow: 2px 2px BLACK;
+/* 	color: white;
+  	text-shadow: 2px 2px BLACK;*/
 }
 
 html {
@@ -60,4 +60,41 @@ html {
 	border-bottom: 0;
 	margin-top: -12.5px;
 	margin-right: -25px;
+}
+
+.toplevel {
+	position: relative;
+}
+
+.publicresultsheader {
+	background-image: url("../img/topline.png");
+	width: 700px;
+	height: 130px;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+}
+
+.linedpaper {
+	background-image: url("../img/singleline.png");
+	width: 700px;
+	height: 38px;
+	margin: 0;
+	padding: 0;
+}
+
+.oneLine {
+	margin-left: 110px;
+}
+
+.publicresults {
+	position: absolute;
+	left: 123px;
+	width: 700px;
+	z-index: 1;
+}
+
+table {
+	border-collapse: collapse;
+	border: none;	
 }
