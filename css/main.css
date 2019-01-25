@@ -47,6 +47,7 @@ html {
   	filter: drop-shadow(0 0 30px #333);
 }
 
+
 .speech-bubble:after {
 	content: '';
 	position: absolute;
