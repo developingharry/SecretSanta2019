@@ -79,7 +79,7 @@ function Santa(name) {
         hiddenInput.select();
         document.execCommand("copy");
         document.body.removeChild(hiddenInput);
-        alert("copied");
+        alert("Link copied.  You can now paste this into an email, text or message for " + self.name() + "!");
     }
 }
 
@@ -95,11 +95,18 @@ var ViewModel = function() {
     ]);
 
     self.hidePaper = ko.observable(false);
+    self.hideSecret = ko.observable(false);
 
     self.hideMe = function() {
         console.log("hiding");
         self.hidePaper(true);
     }
+
+    self.hideSecretResults = function() {
+        console.log("hiding secret results");
+        self.hideSecret(true);
+    }
+
 
     // the main function for adding Santas to the array
     self.addSanta = function() {
@@ -228,6 +235,7 @@ var ViewModel = function() {
             // the point this function changes it back.
             self.santaChange(false);
             self.hidePaper(false);
+            self.hideSecret(false);
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };

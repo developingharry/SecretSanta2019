@@ -5,6 +5,7 @@
     <title>Secret Santa Maker</title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
     <!-- font for public results -->
     <link href="https://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here" rel="stylesheet">
@@ -71,23 +72,26 @@
 
         <!-- /ko -->
 
-       <!-- ko if: resultsOption() == 'hideResults' && finished() && !santaChange()-->
-        <div id="secretResults" style="display: none" data-bind="visible:true">
-        <h2>Secret results area</h2>
-        <h3>Please give the following links to each giftee. You can copy them to the clipboard just by clicking!</h3>
-        <p data-bind="foreach: santas">
-            <span data-bind="text: 'Send this one to ' + name() + ':'"></span>
-            <span data-bind=" attr: {id: $index},
-                           text:secretUrl(),
-                           click: function(data, event) { copyUrl(data, event) }">
-            </span>
-            <br>
-            =============================================================================
-            <br>
-        </p>
+       <!-- ko if: resultsOption() == 'hideResults' && finished() && !santaChange() && !hideSecret() -->
+        <div id="secretResults" style="display: none" class="modal" data-bind="visible:true">
+            <div class="modal-content">
+                <h2>Secret results area</h2>
+                <h3 data-bind="click: function() {hideSecretResults()}">CLOSE</h3>
+                <h3>Please give the following links to each giftee. You can copy them to the clipboard just by clicking!</h3>
+                <p data-bind="foreach: santas">
+                    <span data-bind="text: 'Send this one to ' + name() + ':'"></span>
+                    <b data-bind=" attr: {id: $index},
+                               text:secretUrl(),
+                               click: function(data, event) { copyUrl(data, event) }">
+                    </b><br>
+                =============================================================================<br>
+                </p>
+            </div>
         </div>
         <!-- /ko -->
     </span>
+
+
 
     <!-- ko if: secretData() -->
     <div id="santaface" style="display: none" data-bind="visible:true">
@@ -99,11 +103,14 @@
     </div>
     <!-- /ko -->
 
+</div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/modal.js"></script>
+
 </body>
 
 </html>
