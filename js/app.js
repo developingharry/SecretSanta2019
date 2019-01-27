@@ -34,6 +34,7 @@ ko.extenders.required = function(target, overrideMessage) {
     return target;
 };
 
+
 // prototype santa, or "gifter"
 function Santa(name) {
     var self = this;
@@ -43,6 +44,10 @@ function Santa(name) {
         required: ""
     });
 
+    // self.hideMe = function() {
+    //     console.log("hiding");
+    //     hidePaper(true);
+    // }
     // each "santa"'s individual gift recipient
     self.giftee = ko.observable();
 
@@ -88,6 +93,13 @@ var ViewModel = function() {
     self.santas = ko.observableArray([
         new Santa("")
     ]);
+
+    self.hidePaper = ko.observable(false);
+
+    self.hideMe = function() {
+        console.log("hiding");
+        self.hidePaper(true);
+    }
 
     // the main function for adding Santas to the array
     self.addSanta = function() {
@@ -215,6 +227,7 @@ var ViewModel = function() {
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
             self.santaChange(false);
+            self.hidePaper(false);
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };

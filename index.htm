@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Aleo" rel="stylesheet">
+    <!-- font for public results -->
+    <link href="https://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 </head>
 
@@ -49,15 +51,12 @@
 
 
 
-        <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() -->
-<!--          <div style="display: none" data-bind="visible:true" class="publicresults">
-            <div data-bind="foreach: santas">
-               <i data-bind="text: name"></i> will be buying for <i data-bind="text: giftee"></i><br>
-            </div>
-         </div> -->
+        <!-- ko if: resultsOption()=="showResults" && finished() && !santaChange() && !hidePaper()-->
          
          <table style="display: none" data-bind="visible:true" class="publicresults">
-            <th class="publicresultsheader"></th>
+            <th align="right" class="publicresultsheader">
+                <span id="paperclose" data-bind="click: function() {hideMe()}">CLOSE</span>
+            </th>
             <tbody data-bind="foreach: santas">
                <tr>
                   <td class="linedpaper">
@@ -66,12 +65,13 @@
                   </td>
                </tr>
             </tbody>
+            <tr><td class="linedpaper"></td></tr>
          </table>
 
 
         <!-- /ko -->
 
-       <!-- ko if: resultsOption() == 'hideResults' && finished() && !santaChange() -->
+       <!-- ko if: resultsOption() == 'hideResults' && finished() && !santaChange()-->
         <div id="secretResults" style="display: none" data-bind="visible:true">
         <h2>Secret results area</h2>
         <h3>Please give the following links to each giftee. You can copy them to the clipboard just by clicking!</h3>
@@ -109,3 +109,4 @@
 </html>
 
 <!-- Public Domain Santa Photo by bruce mars from Pexels -->
+<!-- Main background Photo by rawpixel.com from Pexels -->

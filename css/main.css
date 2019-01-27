@@ -1,24 +1,15 @@
 body {
 
  	font-family: 'Aleo', serif;
-/* 	color: white;
-  	text-shadow: 2px 2px BLACK;*/
+ 	background-size: cover;
+	background-image: url("../img/mainbg.jpg");
+	position: fixed;
+	left: 0;
+	top: 0;
+ 	width: 100vw;
+ 	height: 100vh;
 }
 
-html {
-    height: 100%;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background: #70bg32;
-    background-repeat:no-repeat;
-    background: -webkit-linear-gradient(to bottom right, #e83c5b, #63a55b);
-    background: -moz-linear-gradient(to bottom right, #e83c5b, #63a55b);
-    background: -ms-linear-gradient(to bottom right, #e83c5b, #63a55b);
-    background: -o-linear-gradient(to bottom right, #e83c5b, #63a55b);
-    background: linear-gradient(to bottom right, #e83c5b, #63a55b);
-}
 
 .shadow {
 	text-shadow: 2px 2px black;
@@ -88,13 +79,26 @@ html {
 }
 
 .publicresults {
-	position: absolute;
-	left: 123px;
+	position: fixed;
+	top: 10vh;
+	left: 10vw;
 	width: 700px;
 	z-index: 1;
+	overflow: auto;
 }
 
 table {
 	border-collapse: collapse;
 	border: none;	
+	max-height: 40vh;
+}
+
+#paperclose {
+	margin-right: 10px;
+}
+
+.oneLine, #paperclose {
+		font-family: 'Just Me Again Down Here', cursive;
+	color: #18187d;
+	font-size: xx-large;
 }
