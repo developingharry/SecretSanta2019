@@ -15,6 +15,9 @@ body {
 	text-shadow: 2px 2px black;
 }
 
+.secretUrl {
+	border: 1px black solid;
+}
 #santaface {
 	background-size: cover;
 	background-image: url("../img/santabg.jpg");
@@ -25,7 +28,9 @@ body {
  	height: 100vh;
 }
 
-
+.pagetitle {
+	text-align: center;
+}
 .speech-bubble {
     position: relative;
     background: #ffffff;

@@ -236,6 +236,8 @@ var ViewModel = function() {
             self.santaChange(false);
             self.hidePaper(false);
             self.hideSecret(false);
+            // new method for showing public results/
+            $( "#showResultsDialog" ).dialog( "open" );
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };
@@ -270,6 +272,16 @@ var ViewModel = function() {
             return budget;
         }
     }
+
+    // prepare the public results dialog without showing it
+    $("#showResultsDialog").dialog({
+        autoOpen: false,
+        closeText: ""
+    });
+    // enable tooltips (mainly for the recycle bin button)
+    $( function() {
+        $( document ).tooltip();
+  } );
 
 };
 
