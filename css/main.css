@@ -1,6 +1,4 @@
 body {
-
- 	font-family: 'Aleo', serif;
  	background-size: cover;
 	background-image: url("../img/mainbg.jpg");
 	position: fixed;
@@ -103,7 +101,6 @@ table {
 }
 
 .oneLine, #paperclose {
-		font-family: 'Just Me Again Down Here', cursive;
 	color: #18187d;
 	font-size: xx-large;
 }
