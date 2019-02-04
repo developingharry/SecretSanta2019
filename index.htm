@@ -72,11 +72,12 @@
     <!-- /ko -->
     <!-- ko if: resultsOption() == 'hideResults' -->
     <span>Please give the following links to each giftee.  You can copy them to the clipboard just by clicking!</span>
-    <p data-bind="foreach: santas">
-        <span data-bind="text: 'Send this one to ' + name() + ':'"></span>
-        <span class="secretUrl" data-bind=" attr: {id: $index}, text:secretUrl(), click: function(data, event) { copyUrl(data, event) }">
-        </span><br>=============================================================================<br>
-    </p>
+    <span data-bind="foreach: santas">
+        <p class="secretUrl" data-bind="attr: {id: $index},
+                                            text:'Click here to copy ' + name() + '\'s link', 
+                                            click: function(data, event) { copyUrl(secretUrl(), event) }">
+        </p>
+    </span>
     <!-- /ko -->
 </div>
 <!-- end of results dialog -->
