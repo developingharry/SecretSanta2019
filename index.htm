@@ -39,8 +39,8 @@
             </div>
 
             <div class="col santaform" id="santaform">
-                <header>Enter names here:</header>    
-                <p data-bind="foreach: santas">
+<!--                 <header>Enter names here:</header>    
+ -->                <p data-bind="foreach: santas">
                     <input data-bind="value: name, valueUpdate: 'keyup'" />
                     <img src="img/bin.png" width="15px" height="15px" alt="remove item" title="Remove this Santa" data-bind="click: $root.removeSanta">
                     <!-- error message line, to be shown if field has no content -->

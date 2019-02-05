@@ -20,7 +20,7 @@ ko.extenders.required = function(target, overrideMessage) {
     //define a function to do validation
     function validate(newValue) {
         target.hasError(newValue ? false : true);
-        target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
+        target.validationMessage(newValue ? "" : overrideMessage || "Enter a name here");
         anyErrors(newValue ? false : true);
     }
 
