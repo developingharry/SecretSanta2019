@@ -14,39 +14,53 @@
   <body>
 
     <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
-    <span data-bind="visible: !secretData()" class="toplevel">
+    <main data-bind="visible: !secretData()" class="container">
         <h1 class="pagetitle">Secret Santa Maker</h1>
-        <table>
-            <tr>
-                <td>SANTAS</td>
-            </tr>
-            What's the budget?
-            <input data-bind="textInput: ViewModel.santaBudget" /></p>
-            <tbody data-bind="foreach: santas, afterAdd: arrayInitialised()">
-                <tr>
-                    <td>
-                        <input data-bind="value: name, valueUpdate: 'keyup'" />
-                        <img src="img/bin.png" width="15px" height="15px" alt="remove item" title="Remove this Santa" data-bind="click: $root.removeSanta">
-                        <!-- error message line, to be shown if field has no content -->
-                         <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button data-bind="click: addSanta">add another Santa</button>
-        <br>
+        
+        <section class="row">
+            <div class="col lead instructions">
+            To set up Secret Santa assignments for your office/apartment/club:<br>
+            <ol>
+                <li>Set a max spend (eg. £5): <input data-bind="textInput: ViewModel.santaBudget" size="9" /></li>
+                <li>Decide if you're joining in (and want to keep the results secret, <b>even from you</b>), or if you're happy to see who got whom.<br>
+                    <ol type="a">
+                        <li>
+                            <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results
+                        </li>
+                        <li>
+                            <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
+                        </li>
+                    </ol>
+                </li>
+                <li>Start adding Santas using the boxes on the right!  If you need to remove one, just click the little recycle bin.</li>
+                <li>Once you have everyone's name entered, press FINISHED to see the results.</li>
+            </ol>
 
-        <h3>How would you like this to be set up? See the results, or keep them super secret so you can join in too?</h3>
-        <p>
-            <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results<br>
-            <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
-        </p>
+            </div>
 
-        <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
-        <!-- ko if: santas().length > 1 && !anyErrors()-->
-        <button style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
-        <!-- /ko -->
-    </span>
+            <div class="col santaform" id="santaform">
+                <header>Enter names here:</header>    
+                <p data-bind="foreach: santas">
+                    <input data-bind="value: name, valueUpdate: 'keyup'" />
+                    <img src="img/bin.png" width="15px" height="15px" alt="remove item" title="Remove this Santa" data-bind="click: $root.removeSanta">
+                    <!-- error message line, to be shown if field has no content -->
+                    <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
+                    <br>
+                </p>
+                <button data-bind="click: addSanta">add another Santa</button>
+                <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
+                <!-- ko if: santas().length > 1 && !anyErrors()-->
+                <button style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
+                <!-- /ko -->
+            </div>
+        </section>
+
+        <section class = "row">
+            <footer class="col">
+                <div>NB. It may please you to hear that NONE of your details (email, names etc) are stored by this website.  As soon as you've gone, I'll have forgotten who you are!  (don't take it personally, and don't worry, the site will still work!)</div>
+            </footer>
+        </section>
+    </main>
 
 
 
@@ -54,7 +68,7 @@
 
 
     <!-- Pop-up contents, displayed dependent on radio button choice by user. -->
-    <div id="showResultsDialog" style="display: none" data-bind="visible:true" title="Secret Santas:">
+    <section id="showResultsDialog" style="display: none" data-bind="visible:true" title="Secret Santas:">
         <!-- ko if: resultsOption() == 'showResults' -->
         <span data-bind="foreach:santas">
             <span data-bind="text: name() + (' will be buying for ') + giftee()"></span><br>
@@ -69,20 +83,20 @@
             </p>
         </span>
         <!-- /ko -->
-    </div>
+    </section>
     <!-- End of pop-up contents -->
 
 
 
     <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
     <!-- ko if: secretData() -->
-    <div id="santaface" style="display: none" data-bind="visible:true">
+    <section id="santaface" style="display: none" data-bind="visible:true">
         <hgroup class="speech-bubble">
             <h1>Hey <span data-bind="text: santaData()"></span>!</h1>
             <h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
             <h2>Merry Xmas!</h2>
         </hgroup>
-    </div>
+    </section>
     <!-- /ko -->
 
     <!-- js scripts -->

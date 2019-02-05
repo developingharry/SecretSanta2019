@@ -276,7 +276,8 @@ var ViewModel = function() {
     // prepare the public results dialog without showing it
     $("#showResultsDialog").dialog({
         autoOpen: false,
-        closeText: ""
+        closeText: "",
+        position: { my: "center center", at: "center center", of: "#santaform" }
     });
     // enable tooltips (mainly for the recycle bin button)
     $( function() {
