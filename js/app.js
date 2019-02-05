@@ -62,7 +62,7 @@ function Santa(name) {
     }, self);
 
     // prefix stored for easy updating in case of moving hosts.
-    self.urlPrefix = ko.observable("http://127.0.0.1/");
+    self.urlPrefix = ko.observable("https://developingharry.github.io/SecretSanta2019/");
 
     // the full web address that's given to each santa
     self.secretUrl = ko.computed(function() {
