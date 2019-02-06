@@ -39,15 +39,15 @@
             </div>
 
             <div class="col santaform" id="santaform">
-<!--                 <header>Enter names here:</header>    
- -->                <p data-bind="foreach: santas">
-                    <input data-bind="value: name, valueUpdate: 'keyup'" />
+                <p data-bind="foreach: santas">
+                    <!-- <input data-bind="value: name, valueUpdate: 'keyup'" /> -->
+                    <input data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" />
                     <img src="img/bin.png" width="15px" height="15px" alt="remove item" title="Remove this Santa" data-bind="click: $root.removeSanta">
                     <!-- error message line, to be shown if field has no content -->
                     <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
                     <br>
                 </p>
-                <button data-bind="click: addSanta">add another Santa</button>
+                <button data-bind="click: addSanta" id="addSantaButton">add another Santa</button>
                 <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
                 <!-- ko if: santas().length > 1 && !anyErrors()-->
                 <button style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>

@@ -44,10 +44,14 @@ function Santa(name) {
         required: ""
     });
 
-    // self.hideMe = function() {
-    //     console.log("hiding");
-    //     hidePaper(true);
-    // }
+    self.enterCheck = function(d,e) {
+        if(e.keyCode ==13) {
+            $("#addSantaButton").click();
+            $(this).next(':input').focus();
+            // alert('enter pressed');
+        };
+        return true;
+    };
     // each "santa"'s individual gift recipient
     self.giftee = ko.observable();
 
