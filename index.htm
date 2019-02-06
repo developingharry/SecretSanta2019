@@ -4,10 +4,19 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <!-- favicon links -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <!-- end of favicon links -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <link rel="stylesheet" href="css/temp.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.css">
     <title>Secret Santa Maker</title>
   </head>
@@ -18,7 +27,7 @@
         <h1 class="pagetitle">Secret Santa Maker</h1>
         
         <section class="row">
-            <div class="col lead instructions">
+            <div class="col instructions">
             To set up Secret Santa assignments for your office/apartment/club:<br>
             <ol>
                 <li>Set a max spend (eg. £5): <input data-bind="textInput: ViewModel.santaBudget" size="9" /></li>
@@ -90,11 +99,11 @@
 
     <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
     <!-- ko if: secretData() -->
-    <section id="santaface" style="display: none" data-bind="visible:true">
+    <section id="santaface" class="bg" style="display: none" data-bind="visible:true">
         <hgroup class="speech-bubble">
-            <h1>Hey <span data-bind="text: santaData()"></span>!</h1>
-            <h2>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</h2>
-            <h2>Merry Xmas!</h2>
+            <span>Hey <span data-bind="text: santaData()"></span>!</span>
+            <span>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</span>
+            <span>Merry Xmas!</span>
         </hgroup>
     </section>
     <!-- /ko -->

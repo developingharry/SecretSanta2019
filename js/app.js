@@ -44,11 +44,10 @@ function Santa(name) {
         required: ""
     });
 
+    // checks whether enter has been pressed, and updates the form accordingly, as if the add santa button has been pressed.
     self.enterCheck = function(d,e) {
         if(e.keyCode ==13) {
             $("#addSantaButton").click();
-            $(this).next(':input').focus();
-            // alert('enter pressed');
         };
         return true;
     };
@@ -97,20 +96,6 @@ var ViewModel = function() {
     self.santas = ko.observableArray([
         new Santa("")
     ]);
-
-    self.hidePaper = ko.observable(false);
-    self.hideSecret = ko.observable(false);
-
-    self.hideMe = function() {
-        console.log("hiding");
-        self.hidePaper(true);
-    }
-
-    self.hideSecretResults = function() {
-        console.log("hiding secret results");
-        self.hideSecret(true);
-    }
-
 
     // the main function for adding Santas to the array
     self.addSanta = function() {
@@ -238,8 +223,6 @@ var ViewModel = function() {
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
             self.santaChange(false);
-            self.hidePaper(false);
-            self.hideSecret(false);
             // new method for showing public results/
             $( "#showResultsDialog" ).dialog( "open" );
         } else {
