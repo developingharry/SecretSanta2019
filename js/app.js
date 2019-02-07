@@ -41,7 +41,7 @@ function Santa(name) {
 
     // extended observable to track name, and give error if one is not entered
     self.name = ko.observable(name).extend({
-        required: ""
+        required: "Hello"
     });
 
     // checks whether enter has been pressed, and updates the form accordingly, as if the add santa button has been pressed.
@@ -107,7 +107,17 @@ var ViewModel = function() {
     self.removeSanta = function(data) {
         self.santaChange(true);
         self.santas.remove(data);
+        if(self.santas().length > 1) {
+            anyErrors(false);
+        };
     };
+
+    self.instructionsHidden = ko.observable(false);
+
+    self.hideInstructions = function() {
+        $('#instructions').hide();
+        self.instructionsHidden(true);
+    }
 
     // empty array of giftees, or recipients.  this will later be populated with 
     // the contents of the santas array, and shuffled.
@@ -223,8 +233,6 @@ var ViewModel = function() {
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
             self.santaChange(false);
-            // new method for showing public results/
-            $( "#showResultsDialog" ).dialog( "open" );
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };
@@ -259,18 +267,6 @@ var ViewModel = function() {
             return budget;
         }
     }
-
-    // prepare the public results dialog without showing it
-    $("#showResultsDialog").dialog({
-        autoOpen: false,
-        closeText: "",
-        position: { my: "center center", at: "center center", of: "#santaform" }
-    });
-    // enable tooltips (mainly for the recycle bin button)
-    $( function() {
-        $( document ).tooltip();
-  } );
-
 };
 
 ko.applyBindings(new ViewModel());

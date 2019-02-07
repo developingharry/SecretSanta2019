@@ -17,80 +17,110 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="css/main.css"> -->
     <link rel="stylesheet" href="css/temp.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.css">
     <title>Secret Santa Maker</title>
   </head>
-  <body>
+
+  <body class = "container">
+
+    <div data-bind="visible: !secretData()" class = "row" id="instructions">
+        <div class = "col">
+            <div class="card" style="width: 20rem;">
+                <img src="https://placeimg.com/640/480/any" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Secret Santa Maker</h5>
+                    <p class="card-text">Set up a Secret Santa event for your office/apartment/club:</p>
+                </div>
+                <ol class="list-group list-group-flush">
+                    <li class="list-group-item">1. Set a max spend (eg. £5)</li>
+                    <li class="list-group-item">2. Decide if you want to see who got who, or join in!</li>
+                    <li class="list-group-item">3. Start adding Santas!</li>
+                    <li class="list-group-item">4. Press FINISHED when done.</li>
+                </ol>
+                <div class="card-body">
+                <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
+                    <button type="button" class="btn btn-primary" data-bind="click: hideInstructions">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
-    <main data-bind="visible: !secretData()" class="container">
-        <h1 class="pagetitle">Secret Santa Maker</h1>
-        
+    <main data-bind="visible: !secretData() && instructionsHidden" class="container">
         <section class="row">
-            <div class="col instructions">
-            To set up Secret Santa assignments for your office/apartment/club:<br>
-            <ol>
-                <li>Set a max spend (eg. £5): <input data-bind="textInput: ViewModel.santaBudget" size="9" /></li>
-                <li>Decide if you're joining in (and want to keep the results secret, <b>even from you</b>), or if you're happy to see who got whom.<br>
-                    <ol type="a">
-                        <li>
-                            <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" />Reveal the results
-                        </li>
-                        <li>
-                            <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption" />Hide the names
-                        </li>
-                    </ol>
-                </li>
-                <li>Start adding Santas using the boxes on the right!  If you need to remove one, just click the little recycle bin.</li>
-                <li>Once you have everyone's name entered, press FINISHED to see the results.</li>
-            </ol>
-
-            </div>
-
-            <div class="col santaform" id="santaform">
-                <p data-bind="foreach: santas">
-                    <!-- <input data-bind="value: name, valueUpdate: 'keyup'" /> -->
-                    <input data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" />
-                    <img src="img/bin.png" width="15px" height="15px" alt="remove item" title="Remove this Santa" data-bind="click: $root.removeSanta">
-                    <!-- error message line, to be shown if field has no content -->
-                    <span data-bind='visible: name.hasError, text: name.validationMessage'></span>
-                    <br>
-                </p>
-                <button data-bind="click: addSanta" id="addSantaButton">add another Santa</button>
-                <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
-                <!-- ko if: santas().length > 1 && !anyErrors()-->
-                <button style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
-                <!-- /ko -->
+            <div class="col">
+                <p>MAX SPEND:<input data-bind="textInput: ViewModel.santaBudget" size="9"></p>
+                <span class="btn-group btn-group-toggle">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" checked>Reveal the results
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption">Hide the results
+                </label>
+                </span>
             </div>
         </section>
 
-        <section class = "row">
+        <div data-bind="foreach:santas">
+            <span class="input-group">
+                                <input  type="text"
+                        class="form-control"
+                        placeholder="Participant name"
+                        aria-label="Participant name"
+                        aria-describedby="button-addon2"
+                        data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" required>
+                <div class="input-group-btn">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bind="click: $root.removeSanta">X</button>
+                </div>
+            </span>
+        </div>
+
+        <section class="row">
+            <span class="col">
+                <button type="button" class="btn btn-primary" id="addSantaButton" data-bind="click: addSanta">Add another Santa</button>
+                <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
+                <!-- ko if: santas().length > 1 && !anyErrors() -->
+                <button type="button" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
+                <!-- /ko -->
+            </span>
+
+        </section>
+        <!--<section class = "row">
             <footer class="col">
                 <div>NB. It may please you to hear that NONE of your details (email, names etc) are stored by this website.  As soon as you've gone, I'll have forgotten who you are!  (don't take it personally, and don't worry, the site will still work!)</div>
             </footer>
-        </section>
+        </section> -->
     </main>
 
 
 
 
 
-
     <!-- Pop-up contents, displayed dependent on radio button choice by user. -->
-    <section id="showResultsDialog" style="display: none" data-bind="visible:true" title="Secret Santas:">
-        <!-- ko if: resultsOption() == 'showResults' -->
-        <span data-bind="foreach:santas">
-            <span data-bind="text: name() + (' will be buying for ') + giftee()"></span><br>
-        </span>
+    <section id="showResultsDialog" style="display: none" data-bind="visible:true" class="container">
+        <!-- ko if: finished() && resultsOption() == 'showResults' -->
+        <section class="row">
+            <span data-bind="foreach:santas" class="col">
+                            <span data-bind="text: name() + (' will be buying for ') + giftee()" class = "col"></span><br>
+            </span>
+        </section>
         <!-- /ko -->
-        <!-- ko if: resultsOption() == 'hideResults' -->
-        <span>Please give the following links to each giftee.  You can copy them to the clipboard just by clicking!</span>
-        <span data-bind="foreach: santas">
-            <p class="secretUrl" data-bind="attr: {id: $index},
-                                                text:'Click here to copy ' + name() + '\'s link', 
-                                                click: function(data, event) { copyUrl(secretUrl(), event) }">
-            </p>
+        <!-- ko if: finished() && resultsOption() == 'hideResults' -->
+        <span class="row">
+            <span class="col">Please give the following links to each giftee.  You can copy them to the clipboard just by clicking!</span>
         </span>
+        
+
+        <section class="row">
+            <span data-bind="foreach: santas" class="col">
+                <button type="button" class="secretUrl btn btn-primary btn-lg btn-block" data-bind="attr: {id: $index},
+                                                text:'Click here to copy ' + name() + '\'s link', 
+                                                click: function(data, event) { copyUrl(secretUrl(), event) }">Hello</button>
+            </span>
+        </section>
         <!-- /ko -->
     </section>
     <!-- End of pop-up contents -->
@@ -113,8 +143,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-    <!-- jQueryUI for modals that play nicely with knockout -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- my main js -->
     <script src="js/app.js"></script>
 
