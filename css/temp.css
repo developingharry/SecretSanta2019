@@ -1,3 +1,4 @@
+/*mobile:*/
 body, html {
   height: 100%;
 }
@@ -14,3 +15,49 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+#instructions {
+  margin-top: 8vh;
+    filter: drop-shadow(0 0 10px #333);
+
+}
+
+#secretPage {
+  background-image: url("../img/santabg.jpg");
+    /* Full height */
+  height: 100vh;
+  background-position-x: 79%;
+  background-position-y: bottom;
+  /* Center and scale the image nicely */
+  background-repeat: no-repeat;
+  background-size: 133%;
+}
+
+.secretMessage {
+  text-align: center;
+  background-color: white;
+}
+
+.speech-bubble {
+  margin-top: 5vh;
+  padding-bottom: 10px;
+  position: relative;
+  background: #ffffff;
+  border-radius: .4em;
+  filter: drop-shadow(0 0 30px #333);
+}
+
+.speech-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-top-color: #ffffff;
+  border-bottom: 0;
+  margin-left: -84px;
+  margin-bottom: -20px;
+}
+/*end of mobile*/

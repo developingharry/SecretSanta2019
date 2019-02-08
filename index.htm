@@ -20,25 +20,26 @@
     <title>Secret Santa Maker</title>
   </head>
 
-  <body class = "container">
+  <body class = "bg">
 
-    <div data-bind="visible: !secretData()" class = "row" id="instructions">
-        <div class = "col">
-            <div class="card" style="width: 20rem;">
-                <img src="https://placeimg.com/640/480/any" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Secret Santa Maker</h5>
-                    <p class="card-text">Set up a Secret Santa event for your office/apartment/club:</p>
-                </div>
-                <ol class="list-group list-group-flush">
-                    <li class="list-group-item">1. Set a max spend (eg. £5)</li>
-                    <li class="list-group-item">2. Decide if you want to see who got who, or join in!</li>
-                    <li class="list-group-item">3. Start adding Santas!</li>
-                    <li class="list-group-item">4. Press FINISHED when done.</li>
-                </ol>
-                <div class="card-body">
-                <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
-                    <button type="button" class="btn btn-primary" data-bind="click: hideInstructions">Get Started</button>
+    <div class="container">
+        <div data-bind="visible: !secretData()" class = "row" id="instructions">
+            <div class = "col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Secret Santa Generator</h5>
+                        <p class="card-text">To set up a Secret Santa event for your office/apartment/club:</p>
+                    </div>
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item">1. Set a max spend (eg. £5)</li>
+                        <li class="list-group-item">2. Decide if you want to see who got who, or join in!</li>
+                        <li class="list-group-item">3. Start adding Santas!</li>
+                        <li class="list-group-item">4. Press FINISHED when done.</li>
+                    </ol>
+                    <div class="card-body">
+                    <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
+                        <button type="button" class="btn btn-primary" data-bind="click: hideInstructions">Get Started</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,12 +48,11 @@
 
 
 
-
     <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
     <main data-bind="visible: !secretData() && instructionsHidden" class="container">
         <section class="row">
-            <div class="col">
-                <p>MAX SPEND:<input data-bind="textInput: ViewModel.santaBudget" size="9"></p>
+            <div class="col input-group">
+                <p>Max Spend (eg.£5):<input class="form-control" data-bind="textInput: ViewModel.santaBudget" size="9"></p>
                 <span class="btn-group btn-group-toggle">
                 <label class="btn btn-secondary active">
                     <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" checked>Reveal the results
@@ -131,13 +131,13 @@
 
     <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
     <!-- ko if: secretData() -->
-    <section id="santaface" class="bg" style="display: none" data-bind="visible:true">
-        <hgroup class="speech-bubble">
-            <span>Hey <span data-bind="text: santaData()"></span>!</span>
-            <span>Your secret santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!</span>
-            <span>Merry Xmas!</span>
-        </hgroup>
-    </section>
+    <div class="container-fluid">
+        <section id="secretPage" class="row bg" style="display: none" data-bind="visible:true">
+            <span class="col">
+                <h1 class="display-4 secretMessage speech-bubble">Hey <span data-bind="text: santaData()"></span>! Your Secret Santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</h1>
+            </span>
+        </section>
+    </div>
     <!-- /ko -->
 
     <!-- js scripts -->
