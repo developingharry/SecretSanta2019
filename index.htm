@@ -80,7 +80,9 @@
 
         <section class="row">
             <span class="col">
+                <!-- ko if: !anyErrors() -->
                 <button type="button" class="btn btn-primary" id="addSantaButton" data-bind="click: addSanta">Add another Santa</button>
+                <!-- /ko -->
                 <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
                 <!-- ko if: santas().length > 1 && !anyErrors() -->
                 <button type="button" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
