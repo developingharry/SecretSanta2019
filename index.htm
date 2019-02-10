@@ -22,8 +22,8 @@
 
   <body class = "bg">
 
-    <div class="container">
-        <div data-bind="visible: !secretData()" class = "row" id="instructions">
+    <div class="container" id="instructions">
+        <div data-bind="visible: !secretData()" class = "row">
             <div class = "col">
                 <div class="card">
                     <div class="card-body">
@@ -49,53 +49,119 @@
 
 
     <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
-    <main data-bind="visible: !secretData() && instructionsHidden" class="container">
-        <section class="row">
-            <div class="col input-group">
-                <p>Max Spend (eg.£5):<input class="form-control" data-bind="textInput: ViewModel.santaBudget" size="9"></p>
-                <span class="btn-group btn-group-toggle">
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="resultsoptions" value="showResults" data-bind="checked: resultsOption" checked>Reveal the results
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="resultsoptions" value="hideResults" data-bind="checked: resultsOption">Hide the results
-                </label>
-                </span>
-            </div>
-        </section>
 
-        <div data-bind="foreach:santas">
-            <span class="input-group">
-                                <input  type="text"
-                        class="form-control"
-                        placeholder="Participant name"
-                        aria-label="Participant name"
-                        aria-describedby="button-addon2"
-                        data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" required>
-                <div class="input-group-btn">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" data-bind="click: $root.removeSanta">X</button>
+<div data-bind="visible: !secretData() && instructionsHidden">
+    <form class="container entryform">
+        <h2 class="entryformtitle">Santa Entry Form</h2>
+        <div class ="form-group row">
+            <div class="input-group mb-3 col">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Max Spend:</span>
                 </div>
-            </span>
+                <input type="text" class="form-control" placeholder="(eg. £5)" aria-label="Username" aria-describedby="basic-addon1" data-bind="textInput: ViewModel.santaBudget">
+            </div>
         </div>
 
-        <section class="row">
+
+
+
+
+      <fieldset class="form-group">
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="resultsoptions" id="gridRadios1" value="showResults" data-bind="checked: resultsOption" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                    Reveal the results
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="resultsoptions" id="gridRadios2" value="hideResults" data-bind="checked: resultsOption">
+                  <label class="form-check-label" for="gridRadios2">
+                    Hide the results
+                  </label>
+                </div>
+            </div>
+        </div>
+      </fieldset>
+
+      <legend>Santas:</legend>
+      <!-- ko foreach: santas -->
+        <span class = "row">
+                <section class="input-group col">
+                    <input  type="text"
+                            class="form-control"
+                            placeholder="Enter a Name Here"
+                            aria-label="Enter a Name Here"
+                            aria-describedby="button-addon2"
+                            data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" required>
+                    <div class="input-group-btn">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2" data-bind="click: $root.removeSanta">X</span>
+                        </div>
+                    </div>
+                </section>
+            </span>        
+      <!-- /ko -->
+
+
+
+
+        <div class="form-group row">
             <span class="col">
                 <!-- ko if: !anyErrors() -->
-                <button type="button" class="btn btn-primary" id="addSantaButton" data-bind="click: addSanta">Add another Santa</button>
+                <button type="button" class="btn input-group-text" id="addSantaButton" data-bind="click: addSanta">+</button>
                 <!-- /ko -->
+            </span>
+            <span class="col">
                 <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
                 <!-- ko if: santas().length > 1 && !anyErrors() -->
                 <button type="button" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
                 <!-- /ko -->
             </span>
+        </div>
+    </form>
+</div>
 
-        </section>
-        <!--<section class = "row">
-            <footer class="col">
-                <div>NB. It may please you to hear that NONE of your details (email, names etc) are stored by this website.  As soon as you've gone, I'll have forgotten who you are!  (don't take it personally, and don't worry, the site will still work!)</div>
-            </footer>
-        </section> -->
-    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -134,7 +200,7 @@
     <div class="container-fluid">
         <section id="secretPage" class="row bg" style="display: none" data-bind="visible:true">
             <span class="col">
-                <h1 class="display-4 secretMessage speech-bubble">Hey <span data-bind="text: santaData()"></span>! Your Secret Santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</h1>
+                <h2>Hey <span data-bind="text: santaData()"></span>! Your Secret Santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</h2>
             </span>
         </section>
     </div>

@@ -3,9 +3,34 @@ body, html {
   height: 100%;
 }
 
-.bg {
+body {
   /* The image used */
   background-image: url("../img/christmas.jpg");
+
+  /* Full height */
+  height: 100vh;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+legend {
+  margin: 0;
+}
+
+.entryform {
+  background-color: white;
+  border: 2px dotted grey;
+}
+.entryformtitle {
+  text-align: center;
+}
+
+.bg {
+  /* The image used */
+  /*background-image: url("../img/christmas.jpg");*/
 
   /* Full height */
   height: 100%;
@@ -19,23 +44,14 @@ body, html {
 #instructions {
   margin-top: 8vh;
     filter: drop-shadow(0 0 10px #333);
-
 }
 
-#secretPage {
-  background-image: url("../img/santabg.jpg");
-    /* Full height */
-  height: 100vh;
-  background-position-x: 79%;
-  background-position-y: bottom;
-  /* Center and scale the image nicely */
-  background-repeat: no-repeat;
-  background-size: 133%;
-}
+
 
 .secretMessage {
   text-align: center;
   background-color: white;
+  height: 100vh;
 }
 
 .speech-bubble {
@@ -60,4 +76,6 @@ body, html {
   margin-left: -84px;
   margin-bottom: -20px;
 }
+
+
 /*end of mobile*/

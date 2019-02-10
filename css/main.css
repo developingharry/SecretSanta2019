@@ -1,5 +1,5 @@
-
-body {
+body, html {
+	height: 100%;
 }
 
 .instructions {
@@ -17,7 +17,25 @@ body {
 .secretUrl {
 	border: 1px black solid;
 }
+
+
+
 #santaface {
+  /* The image used */
+  background-image: url("../img/santa-frame-colour.svg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+/*#santaface {
 	background-size: cover;
 	background-image: url("../img/santabg.jpg");
 	position: fixed;
@@ -25,7 +43,7 @@ body {
 	top: 0;
  	width: 100vw;
  	height: 100vh;
-}
+}*/
 
 .pagetitle {
 	text-align: center;
