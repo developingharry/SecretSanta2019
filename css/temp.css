@@ -46,6 +46,9 @@ legend {
     filter: drop-shadow(0 0 10px #333);
 }
 
+.table {
+  margin-top: 5vh;
+}
 
 
 .secretMessage {

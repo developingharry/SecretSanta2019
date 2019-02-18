@@ -62,10 +62,6 @@
             </div>
         </div>
 
-
-
-
-
       <fieldset class="form-group">
         <div class="row">
             <div class="col-sm-10">
@@ -104,9 +100,6 @@
             </span>        
       <!-- /ko -->
 
-
-
-
         <div class="form-group row">
             <span class="col">
                 <!-- ko if: !anyErrors() -->
@@ -139,61 +132,40 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- Pop-up contents, displayed dependent on radio button choice by user. -->
-    <section id="showResultsDialog" style="display: none" data-bind="visible:true" class="container">
-        <!-- ko if: finished() && resultsOption() == 'showResults' -->
-        <section class="row">
-            <span data-bind="foreach:santas" class="col">
-                            <span data-bind="text: name() + (' will be buying for ') + giftee()" class = "col"></span><br>
-            </span>
-        </section>
-        <!-- /ko -->
-        <!-- ko if: finished() && resultsOption() == 'hideResults' -->
-        <span class="row">
-            <span class="col">Please give the following links to each giftee.  You can copy them to the clipboard just by clicking!</span>
-        </span>
-        
-
-        <section class="row">
-            <span data-bind="foreach: santas" class="col">
-                <button type="button" class="secretUrl btn btn-primary btn-lg btn-block" data-bind="attr: {id: $index},
-                                                text:'Click here to copy ' + name() + '\'s link', 
-                                                click: function(data, event) { copyUrl(secretUrl(), event) }">Hello</button>
-            </span>
-        </section>
-        <!-- /ko -->
-    </section>
-    <!-- End of pop-up contents -->
-
-
+<section id="showResultsDialog" style="display: none" data-bind="visible:true" class="container">
+    <table class="table table-hover table-dark">
+      <!-- ko if: finished() && doneEditing() && resultsOption() == 'showResults' -->
+      <thead>
+        <tr>
+          <th scope="col">Santa</th>
+          <th scope="col">Target</th>
+        </tr>
+      </thead>
+      <tbody data-bind="foreach:santas">
+        <tr>
+          <td scope="row" data-bind="text: name()"></td>
+          <td data-bind="text:giftee()"></td>
+        </tr>
+      </tbody>
+      <!-- /ko -->
+      <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
+      <thead>
+        <tr>
+         <th scope="col">
+            placeholder heading for hidden results
+        </th>
+      </thead>
+      <tbody data-bind="foreach:santas">
+        <tr>
+            <td data-bind=" attr: {id: $index},
+                            text:'Click here to copy ' + name() + '\'s link', 
+                            click: function(data, event) { copyUrl(secretUrl(), event) }">
+            </td>
+        </tr>         
+      </tbody>
+      <!-- /ko -->
+    </table>
+</section>
 
     <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
     <!-- ko if: secretData() -->

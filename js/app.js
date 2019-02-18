@@ -10,6 +10,7 @@ function decrypt(name) {
 // global variable to store validation errors from input fields.
 // this is so the submit button can be hidden until no errors.
 var anyErrors = ko.observable(true);
+var doneEditing = ko.observable(false);
 
 // validation for fields - code transcribed from the knockout documentation
 ko.extenders.required = function(target, overrideMessage) {
@@ -46,6 +47,7 @@ function Santa(name) {
 
     // checks whether enter has been pressed, and updates the form accordingly, as if the add santa button has been pressed.
     self.enterCheck = function(d,e) {
+        doneEditing(false);
         if(e.keyCode ==13) {
             $("#addSantaButton").click();
         };
@@ -106,6 +108,7 @@ var ViewModel = function() {
     //...and the function for removing them (done by clicking the recycle bin button)
     self.removeSanta = function(data) {
         self.santaChange(true);
+        doneEditing(false);
         self.santas.remove(data);
         if(self.santas().length > 1) {
             anyErrors(false);
@@ -230,6 +233,8 @@ var ViewModel = function() {
             // shuffle and test
             self.shuffleTilCorrect();
             self.finished(true);
+            doneEditing(true);
+
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
             self.santaChange(false);
