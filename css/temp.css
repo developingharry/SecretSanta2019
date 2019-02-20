@@ -5,7 +5,7 @@ body, html {
 
 body {
   /* The image used */
-  background-image: url("../img/christmas.jpg");
+  background-image: url("../img/tree.jpg");
 
   /* Full height */
   height: 100vh;
@@ -47,11 +47,27 @@ legend {
   background-size: cover;
 }
 
-#instructions, .entryform {
-  margin-top: 2vh;
-  filter: drop-shadow(0 0 10px #333);
+.paper {
+  background-image: url("../img/oldpapertexture.jpg");
+  border-radius: 5px;
+  padding: 1.5vh;
 }
 
+.instructions, .entryform {
+  margin-top: 2vh;
+  filter: drop-shadow(0 0 10px #333);
+  font-size: 2vw;
+  width: 50vw;
+}
+
+.instructions {
+  font-family: 'Quintessential', cursive;
+  border-radius: 10px;
+}
+
+.subheading {
+  text-align: center;
+}
 .table {
   margin-top: 5vh;
 }

@@ -79,7 +79,7 @@ function Santa(name) {
     self.copyUrl = function() {
         var hiddenInput = document.createElement("input");
         hiddenInput.setAttribute("value", self.secretUrl());
-        hiddenInput.setAttribute("contenteditable", "true");
+        hiddenInput.setAttribute("contentEditable", true);
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         document.execCommand("copy");
