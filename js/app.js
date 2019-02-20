@@ -76,8 +76,7 @@ function Santa(name) {
 
     // function to copy the above url to the clipboard.
     // this is done by making an invisible input field, populating it with the text, copying and deleting it.
-    self.copyUrl = function(id) {
-        var elementId = id;
+    self.copyUrl = function() {
         var hiddenInput = document.createElement("input");
         hiddenInput.setAttribute("value", self.secretUrl());
         document.body.appendChild(hiddenInput);
@@ -99,10 +98,52 @@ var ViewModel = function() {
         new Santa("")
     ]);
 
+    self.copyResultsToArray = function() {
+        self.resultsForCopying().push("Merry Xmas! The assignments follow");
+        self.urlsForCopying().push("Merry Xmas! Here are the secret links")
+        self.santas().forEach(function(element) {
+            self.resultsForCopying().push("\n" + element.name() + " got " + element.giftee());
+            self.urlsForCopying().push("\n" + element.name() + "'s link is \(" + element.secretUrl() + "\)");
+        });
+        self.resultsForCopying().push("\n" + "and the budget is " + self.santaBudget() + ".");
+        console.log("here's the array hopefully: " + self.resultsForCopying());
+        console.log("and oh god here come the urls" + self.urlsForCopying());
+    }
+
+    self.copyAll = function() {
+        console.log("setting variable");
+        var hiddenTextBox = document.createElement("textarea");
+        if(self.resultsOption() == "showResults") {
+            console.log("setting value for show");
+            $(hiddenTextBox).val(self.resultsForCopying());
+        } else {
+            console.log("setting value for hide");
+            $(hiddenTextBox).val(self.urlsForCopying());
+        }
+        console.log("adding the damn thing");
+        document.body.appendChild(hiddenTextBox);
+        console.log("Selecting it");
+        hiddenTextBox.select();
+        console.log("copying it")
+        document.execCommand("copy");
+        console.log("hiding it")
+        document.body.removeChild(hiddenTextBox);
+        alert("All results copied to clipboard!");
+    }
+
+
+
+
+
+    self.resultsForCopying = ko.observableArray([]);
+
+    self.urlsForCopying = ko.observableArray([]);
+
     // the main function for adding Santas to the array
     self.addSanta = function() {
         self.santas.push(new Santa(""));
         self.santaChange(true);
+        doneEditing(false);
     };
 
     //...and the function for removing them (done by clicking the recycle bin button)
@@ -234,6 +275,10 @@ var ViewModel = function() {
             self.shuffleTilCorrect();
             self.finished(true);
             doneEditing(true);
+            console.log("about to test new function");
+            self.resultsForCopying = ko.observableArray([]);
+            self.urlsForCopying = ko.observableArray([]);
+            self.copyResultsToArray();
 
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
@@ -241,7 +286,6 @@ var ViewModel = function() {
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };
-
     }
 
     // reads the bespoke url to check who the santa is.  as with the budget, this also

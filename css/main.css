@@ -20,9 +20,9 @@ body, html {
 
 
 
-#santaface {
+#secretPage {
   /* The image used */
-  background-image: url("../img/santa-frame-colour.svg");
+  background-image: url("../img/results.jpg");
 
   /* Full height */
   height: 100%;
@@ -35,15 +35,7 @@ body, html {
 
 
 
-/*#santaface {
-	background-size: cover;
-	background-image: url("../img/santabg.jpg");
-	position: fixed;
-	left: 0;
-	top: 0;
- 	width: 100vw;
- 	height: 100vh;
-}*/
+
 
 .pagetitle {
 	text-align: center;

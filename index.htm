@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="css/main.css"> -->
     <link rel="stylesheet" href="css/temp.css">
+    <link href="https://fonts.googleapis.com/css?family=Coiny" rel="stylesheet">
     <title>Secret Santa Maker</title>
   </head>
 
@@ -49,6 +50,11 @@
 
 
     <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            
+
 
 <div data-bind="visible: !secretData() && instructionsHidden">
     <form class="container entryform">
@@ -99,7 +105,6 @@
                 </section>
             </span>        
       <!-- /ko -->
-
         <div class="form-group row">
             <span class="col">
                 <!-- ko if: !anyErrors() -->
@@ -109,12 +114,28 @@
             <span class="col">
                 <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
                 <!-- ko if: santas().length > 1 && !anyErrors() -->
-                <button type="button" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
+                <button type="button" id="finishButton" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
                 <!-- /ko -->
             </span>
         </div>
     </form>
 </div>
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 
@@ -151,28 +172,29 @@
       <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
       <thead>
         <tr>
-         <th scope="col">
-            placeholder heading for hidden results
-        </th>
+         <th scope="col">Secret Links</th>
       </thead>
       <tbody data-bind="foreach:santas">
         <tr>
             <td data-bind=" attr: {id: $index},
                             text:'Click here to copy ' + name() + '\'s link', 
-                            click: function(data, event) { copyUrl(secretUrl(), event) }">
+                            click: function(data, event) { copyUrl(event) }">
             </td>
         </tr>         
       </tbody>
       <!-- /ko -->
     </table>
+    <!-- ko if: finished() && doneEditing() -->
+    <button type="button" class="btn btn-warning" data-bind="click: copyAll">Copy all results to clipboard</button>
+    <!-- /ko -->
 </section>
 
     <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
     <!-- ko if: secretData() -->
-    <div class="container-fluid">
-        <section id="secretPage" class="row bg" style="display: none" data-bind="visible:true">
+    <div class="secretPage container-fluid">
+        <section class="row bg" style="display: none" data-bind="visible:true">
             <span class="col">
-                <h2>Hey <span data-bind="text: santaData()"></span>! Your Secret Santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</h2>
+                <div id="secretMessage">Hey <span data-bind="text: santaData()"></span>! Your Secret Santa target is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</div>
             </span>
         </section>
     </div>
