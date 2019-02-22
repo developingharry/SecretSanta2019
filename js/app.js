@@ -213,6 +213,7 @@ var ViewModel = function() {
         self.giftees([]);
         self.addSanta();
         self.softRestart();
+        $("#budgetInput").val("");
     }
 
     self.softRestart = function() {
