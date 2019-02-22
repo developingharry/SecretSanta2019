@@ -208,12 +208,19 @@ var ViewModel = function() {
         self.resultsOption("showResults");
     }
 
+    self.hardRestart = function() {
+        self.santas([]);
+        self.giftees([]);
+        self.addSanta();
+        self.softRestart();
+    }
+
     self.softRestart = function() {
         $("#entryform").show();
         doneEditing(false);
         self.resultsOption("hideResults");
     }
-    
+
     // record of what the max spend is on this secret santa, if the user wishes to set one.
     self.santaBudget = ko.observable();
 
