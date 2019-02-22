@@ -4,210 +4,177 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <!-- favicon links -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <!-- end of favicon links -->
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="css/main.css"> -->
-    <link rel="stylesheet" href="css/temp.css">
-    <!-- xmassy font -->
-<link href="https://fonts.googleapis.com/css?family=Quintessential" rel="stylesheet">
-<!-- font for secret page -->
-    <link href="https://fonts.googleapis.com/css?family=Coiny" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- my css -->
+    <link rel="stylesheet" href="css/secretsanta.css">
+
+    <!-- VT323 font by Peter Hull -->
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+
     <title>Secret Santa Maker</title>
   </head>
 
-  <body class = "bg">
+  <body>
 
-<!--     <div class="container" id="instructions">
-        <div  class = "row">
-            <div class = "col">
-                <div class="card paper">
-                    <div class="card-body">
-                        <h5 class="card-title">Secret Santa Generator</h5>
-                        <p class="card-text">To set up a Secret Santa event for your office/apartment/club:</p>
-                    </div>
-                    <ol class="list-group">
-                        <li class="">Set a max spend (eg. £5)</li>
-                        <li class="list-group-item">2. Decide if you want to see who got who, or join in!</li>
-                        <li class="list-group-item">3. Start adding Santas!</li>
-                        <li class="list-group-item">4. Press FINISHED when done.</li>
-                    </ol>
-                    <div class="card-body">
- -->                    
-                    </div>
-                </div>
-            </div>
+    <!-- instructions section -->
+    <section class="container" id="instructions" data-bind="visible: !secretData()">
+      <div class="row">
+        <header id="splashHeader" class="col">Secret Santa Maker</header>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p id="setupIntro">To set up a Secret Santa event for your office/apartment/club:</p>
+          <ol id="instructionsList">
+            <li>Set a max spend (eg. £5)</li>
+            <li>Decide if you want to see who got who, or join in!</li>
+            <li>Start adding Santas!</li>
+            <li>Press FINISHED when done.</li>
+          </ol>
         </div>
-    </div>
-
-    <div class="container instructions" id="instructions" data-bind="visible: !secretData()">
-        <div class="row">
-            <div class="col paper">
-                <img src="img/logo.png" width="100%">
-                <p class="subheading">To set up a Secret Santa event for your office/apartment/club:</p>
-                <ol>
-                    <li>Set a max spend (eg. £5)</li>
-                    <li>Decide if you want to see who got who, or join in!</li>
-                    <li>Start adding Santas!</li>
-                    <li>Press FINISHED when done.</li>
-                </ol>
-                <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
-                <button type="button" class="btn btn-primary" data-bind="click: hideInstructions">Get Started</button>
-            </div>
-        </div>        
-    </div>
-
-
-
-
-
-    <!-- shows main page if this isn't a bespoke URL sent to participants, otherwise shows "secret" page -->
-<div data-bind="visible: !secretData() && instructionsHidden">
-    <form class="container entryform">
-        <h2 class="entryformtitle">Santa Entry Form</h2>
-        <div class ="form-group row">
-            <div class="input-group mb-3 col">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Max Spend:</span>
-                </div>
-                <input type="text" class="form-control" placeholder="(eg. £5)" aria-label="Username" aria-describedby="basic-addon1" data-bind="textInput: ViewModel.santaBudget">
-            </div>
+      </div>
+      <div class="row">
+          <div class="col">
+            <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
+            <button type="button" id="startButton" class="btn btn-outline-success" data-bind="click: hideInstructions">Get Started</button>
+          </div>
         </div>
+    </section>
+    <!-- end of instructions section -->
 
-      <fieldset class="form-group">
-        <div class="row">
-            <div class="col-sm-10">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="resultsoptions" id="gridRadios1" value="showResults" data-bind="checked: resultsOption" checked>
-                  <label class="form-check-label" for="gridRadios1">
-                    Reveal the results
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="resultsoptions" id="gridRadios2" value="hideResults" data-bind="checked: resultsOption">
-                  <label class="form-check-label" for="gridRadios2">
-                    Hide the results
-                  </label>
-                </div>
-            </div>
+
+
+
+    <!-- Santa Entry Form -->
+    <section class="container" id="entryform" data-bind="visible: !secretData() && instructionsHidden">
+      <div class="row">
+        <header class="col" id="entryformheader">Santa Entry Form</header>
+      </div>
+      <div class="row">
+        <div class="input-group mb-3 col">
+          <div class="input-group-prepend">
+            <span class="input-group-text formtext" id="basic-addon1">Max Spend</span>
+          </div>
+          <input type="text" class="form-control" placeholder="(eg. £5)" aria-label="Username" aria-describedby="basic-addon1" data-bind="textInput: ViewModel.santaBudget">
         </div>
-      </fieldset>
-
+      </div>
       <legend>Santas:</legend>
       <!-- ko foreach: santas -->
-        <span class = "row">
-                <section class="input-group col">
-                    <input  type="text"
-                            class="form-control"
-                            placeholder="Enter a Name Here"
-                            aria-label="Enter a Name Here"
-                            aria-describedby="button-addon2"
-                            data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" required>
-                    <div class="input-group-btn">
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2" data-bind="click: $root.removeSanta">X</span>
-                        </div>
-                    </div>
-                </section>
-            </span>        
-      <!-- /ko -->
-        <div class="form-group row">
-            <span class="col">
-                <!-- ko if: !anyErrors() -->
-                <button type="button" class="btn input-group-text" id="addSantaButton" data-bind="click: addSanta">+</button>
-                <!-- /ko -->
-            </span>
-            <span class="col">
-                <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
-                <!-- ko if: santas().length > 1 && !anyErrors() -->
-                <button type="button" id="finishButton" class="btn btn-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
-                <!-- /ko -->
-            </span>
+      <div class="row">
+        <div class="input-group col">
+          <input  type="text"
+                  class="form-control"
+                  placeholder="Enter a Name Here"
+                  aria-label="Enter a Name Here"
+                  aria-describedby="button-addon2"
+                  data-bind="textInput : name, event: { keyup: enterCheck }, hasFocus: true" required>
+          <div class="input-group-btn">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2" data-bind="click: $root.removeSanta">X</span>
+            </div>
+          </div>
         </div>
-    </form>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section id="showResultsDialog" style="display: none" data-bind="visible:true" class="container">
-    <table class="table table-hover table-dark">
-      <!-- ko if: finished() && doneEditing() && resultsOption() == 'showResults' -->
-      <thead>
-        <tr>
-          <th scope="col">Santa</th>
-          <th scope="col">Recipient</th>
-        </tr>
-      </thead>
-      <tbody data-bind="foreach:santas">
-        <tr>
-          <td scope="row" data-bind="text: name()"></td>
-          <td data-bind="text:giftee()"></td>
-        </tr>
-      </tbody>
+      </div>
       <!-- /ko -->
-      <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
-      <thead>
-        <tr>
-         <th scope="col">Secret Links</th>
-      </thead>
-      <tbody data-bind="foreach:santas">
-        <tr>
-            <td data-bind=" attr: {id: $index},
-                            text:'Click here to copy ' + name() + '\'s link', 
-                            click: function(data, event) { copyUrl(event) }">
-            </td>
-        </tr>         
-      </tbody>
-      <!-- /ko -->
-    </table>
-    <!-- ko if: finished() && doneEditing() -->
-    <button type="button" class="btn btn-warning" data-bind="click: copyAll">Copy all results to clipboard</button>
-    <!-- /ko -->
-</section>
+      <div class="form-group row">
+          <span class="col">
+              <!-- ko if: !anyErrors() -->
+              <button type="button" class="btn input-group-text" id="addSantaButton" data-bind="click: addSanta">+</button>
+              <!-- /ko -->
+          </span>
+          <span class="col">
+              <!-- nb: the inline style & visibility data-bind is the best way I've found to preload DOM elements without flickering. -->
+              <!-- ko if: santas().length > 1 && !anyErrors() -->
+              <button type="button" id="finishButton" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: assignGiftees">FINISHED</button>
+              <!-- /ko -->
+          </span>
+      </div>
+    </section>
+    <!-- end of form -->
 
-    <!-- to be displayed if this is a user visiting the site from a secret link, sent by the original user. -->
+    <!-- Results page -->
+
+
+    <section class="container" id="resultsPage">
+      <div class="row">
+        <!-- ko if: finished() && doneEditing() -->
+        <header id="resultsHeader" class="col">RESULTS</header>
+        <!-- /ko -->
+      </div>
+      
+      <div class="row" id="showResultsDialog" style="display: none" data-bind="visible:true">
+        <div class="col">
+          <table class="table">
+            <!-- ko if: finished() && doneEditing() && resultsOption() == 'showResults' -->
+            <thead>
+              <tr>
+                <th scope="col">Santa</th>
+                <th scope="col">Recipient</th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach:santas">
+              <tr>
+                <td scope="row" data-bind="text: name()"></td>
+                <td data-bind="text:giftee()"></td>
+              </tr>
+            </tbody>
+            <!-- /ko -->
+            <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
+            <thead>
+              <tr>
+               <th scope="col">Secret Links</th>
+            </thead>
+            <tbody data-bind="foreach:santas">
+              <tr>
+                  <td data-bind=" attr: {id: $index},
+                                  text:'Click here to copy ' + name() + '\'s link', 
+                                  click: function(data, event) { copyUrl(event) }">
+                  </td>
+              </tr>         
+            </tbody>
+            <!-- /ko -->
+          </table>
+        </div>
+      </div>
+      <nav class="row" id="resultsButtons" data-bind="visible: finished() && doneEditing()">
+        <div class="col">
+          <button type="button" id="copyLinks" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: copyAll">Copy results</button>
+          <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
+          <button type="button" id="revealSantas" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hideLinks">Reveal who got who</button>
+          <!-- /ko -->
+          <!-- ko if: finished() && doneEditing() && resultsOption() == 'showResults' -->
+          <button type="button" id="showLinks" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: showLinks">Get Links to Share</button>
+          <!-- /ko -->
+          <button type="button" id="restart" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: softRestart">Start Again</button>
+        </div>
+      </nav>
+    </section>
+    
     <!-- ko if: secretData() -->
-    <div class="secretPage container-fluid">
-        <section class="row bg" style="display: none" data-bind="visible:true">
-            <span class="col">
-                <div id="secretMessage">Hey <span data-bind="text: santaData()"></span>! Your Secret Santa recipient is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!</div>
-            </span>
-        </section>
-    </div>
+    <section class="container" id="secretPage">
+      <div class="row">
+        <div class="col speech-bubble sb-pointer">
+          <div id="secretText">
+            Hey <span data-bind="text: santaData()"></span>! Your Secret Santa recipient is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <img id="santaface" src="img/santa.png">
+        </div>
+      </div>
+    </section>
     <!-- /ko -->
 
-    <!-- js scripts -->
+    <!-- jQuery, Knockout and Bootstrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <!-- my main js -->
     <script src="js/app.js"></script>
-
   </body>
 </html>
-
-<!-- Public Domain Santa Photo by bruce mars from Pexels -->
-<!-- Main background Photo by rawpixel.com from Pexels -->

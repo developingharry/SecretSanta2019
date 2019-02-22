@@ -100,13 +100,14 @@ var ViewModel = function() {
     ]);
 
     self.copyResultsToArray = function() {
+        self.budgetCopy = ko.observable(self.santaBudget);
         self.resultsForCopying().push("Merry Xmas! The assignments follow");
         self.urlsForCopying().push("Merry Xmas! Here are the secret links")
         self.santas().forEach(function(element) {
             self.resultsForCopying().push("\n" + element.name() + " got " + element.giftee());
             self.urlsForCopying().push("\n" + element.name() + "'s link is \(" + element.secretUrl() + "\)");
         });
-        self.resultsForCopying().push("\n" + "and the budget is " + self.santaBudget() + ".");
+        self.resultsForCopying().push("\n" + "and that's it! Happy secret santa-ing!");
         console.log("here's the array hopefully: " + self.resultsForCopying());
         console.log("and oh god here come the urls" + self.urlsForCopying());
     }
@@ -199,11 +200,25 @@ var ViewModel = function() {
         return ko.utils.arrayGetDistinctValues(self.justSantaNames()).sort();
     }, self);
 
+    self.showLinks = function() {
+        self.resultsOption("hideResults");
+    }
+
+    self.hideLinks = function() {
+        self.resultsOption("showResults");
+    }
+
+    self.softRestart = function() {
+        $("#entryform").show();
+        doneEditing(false);
+        self.resultsOption("hideResults");
+    }
+    
     // record of what the max spend is on this secret santa, if the user wishes to set one.
     self.santaBudget = ko.observable();
 
     // to hold the value of the "would you like to see the results" radio button
-    self.resultsOption = ko.observable("showResults");
+    self.resultsOption = ko.observable("hideResults");
 
     // small tweak to avoid old results being accesible when amendments are made such as adding/removing santas
     self.santaChange = ko.observable(false);
@@ -282,10 +297,12 @@ var ViewModel = function() {
             self.resultsForCopying = ko.observableArray([]);
             self.urlsForCopying = ko.observableArray([]);
             self.copyResultsToArray();
+            console.log('testing the budget, which is' + self.santaBudget());
 
             // this variable shows whether changes have been made since last submission, and hides the results until
             // the point this function changes it back.
             self.santaChange(false);
+            $('#entryform').hide();
         } else {
             alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
         };
