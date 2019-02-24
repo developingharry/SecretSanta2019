@@ -77,9 +77,9 @@ function Santa(name) {
     // function to copy the above url to the clipboard.
     // this is done by making an invisible input field, populating it with the text, copying and deleting it.
     self.copyUrl = function() {
-        var hiddenInput = document.createElement("input");
+        var hiddenInput = document.createElement("textarea");
         hiddenInput.setAttribute("value", self.secretUrl());
-        hiddenTextBox.contentEditable = "true";
+        hiddenInput.contentEditable = "true";
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         document.execCommand("copy");
