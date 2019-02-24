@@ -79,7 +79,7 @@ function Santa(name) {
     self.copyUrl = function() {
         var hiddenInput = document.createElement("input");
         hiddenInput.setAttribute("value", self.secretUrl());
-        hiddenInput.setAttribute("contentEditable", true);
+        hiddenTextBox.contentEditable = "true";
         document.body.appendChild(hiddenInput);
         hiddenInput.select();
         document.execCommand("copy");
@@ -115,7 +115,7 @@ var ViewModel = function() {
     self.copyAll = function() {
         console.log("setting variable");
         var hiddenTextBox = document.createElement("textarea");
-        hiddenTextBox.setAttribute("contenteditable", "true");
+        hiddenTextBox.contentEditable = "true";
 
         if(self.resultsOption() == "showResults") {
             console.log("setting value for show");
@@ -134,10 +134,6 @@ var ViewModel = function() {
         document.body.removeChild(hiddenTextBox);
         alert("All results copied to clipboard!");
     }
-
-
-
-
 
     self.resultsForCopying = ko.observableArray([]);
 
