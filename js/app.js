@@ -100,9 +100,8 @@ var ViewModel = function() {
     ]);
 
     self.copyResultsToArray = function() {
-        self.budgetCopy = ko.observable(self.santaBudget);
         self.resultsForCopying().push("Merry Xmas! The assignments follow");
-        self.urlsForCopying().push("Merry Xmas! Here are the secret links")
+        self.urlsForCopying().push("Merry Xmas! Here are the secret links");
         self.santas().forEach(function(element) {
             self.resultsForCopying().push("\n" + element.name() + " got " + element.giftee());
             self.urlsForCopying().push("\n" + element.name() + "'s link is \(" + element.secretUrl() + "\)");
@@ -112,28 +111,46 @@ var ViewModel = function() {
         console.log("and oh god here come the urls" + self.urlsForCopying());
     }
 
-    self.copyAll = function() {
-        console.log("setting variable");
-        var hiddenTextBox = document.createElement("textarea");
-        hiddenTextBox.contentEditable = "true";
+    // self.copyAll = function() {
+    //     console.log("setting variable");
+    //     var hiddenTextBox = document.createElement("textarea");
+    //     hiddenTextBox.contentEditable = "true";
 
+    //     if(self.resultsOption() == "showResults") {
+    //         console.log("setting value for show");
+    //         $(hiddenTextBox).val(self.resultsForCopying());
+    //     } else {
+    //         console.log("setting value for hide");
+    //         $(hiddenTextBox).val(self.urlsForCopying());
+    //     }
+    //     console.log("adding the damn thing");
+    //     document.body.appendChild(hiddenTextBox);
+    //     console.log("Selecting it");
+    //     hiddenTextBox.select();
+    //     console.log("copying it")
+    //     document.execCommand("copy");
+    //     console.log("hiding it")
+    //     document.body.removeChild(hiddenTextBox);
+    //     alert("All results copied to clipboard!");
+    // }
+
+    self.copyAll = function() {
+        self.resultsForCopying([]);
+        self.urlsForCopying([]);
+        self.resultsForCopying().push("Merry Xmas! The assignments follow");
+        self.urlsForCopying().push("Merry Xmas! Here are the secret links");
+        self.santas().forEach(function(element) {
+            self.resultsForCopying().push("\n" + element.name() + " got " + element.giftee());
+            self.urlsForCopying().push("\n" + element.name() + "'s link is \(" + element.secretUrl() + "\)");
+        });
+        self.resultsForCopying().push("\n" + "and that's it! Happy secret santa-ing!");
+        self.urlsForCopying().push("\n" + "and that's it! Happy secret santa-ing!");
         if(self.resultsOption() == "showResults") {
-            console.log("setting value for show");
-            $(hiddenTextBox).val(self.resultsForCopying());
+            return self.resultsForCopying();
         } else {
-            console.log("setting value for hide");
-            $(hiddenTextBox).val(self.urlsForCopying());
-        }
-        console.log("adding the damn thing");
-        document.body.appendChild(hiddenTextBox);
-        console.log("Selecting it");
-        hiddenTextBox.select();
-        console.log("copying it")
-        document.execCommand("copy");
-        console.log("hiding it")
-        document.body.removeChild(hiddenTextBox);
-        alert("All results copied to clipboard!");
-    }
+            return self.urlsForCopying();
+        };
+    };
 
     self.resultsForCopying = ko.observableArray([]);
 

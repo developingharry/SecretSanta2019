@@ -122,14 +122,10 @@
             </tbody>
             <!-- /ko -->
             <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
-            <thead>
-              <tr>
-               <th scope="col">Secret Links (click to copy)</th>
-            </thead>
             <tbody data-bind="foreach:santas">
               <tr>
                   <td class="clipboard" data-bind=" attr: {id: $index, 'data-clipboard-text': secretUrl()},
-                                                    text: name() + '\'s link'">
+                                                    text: name() + '\'s link' + ' (click to copy)'">
                   </td>
 
              </tr>         
@@ -140,7 +136,7 @@
       </div>
       <nav class="row" id="resultsButtons" data-bind="visible: finished() && doneEditing()">
         <div class="col">
-          <button type="button" id="copyLinks" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: copyAll">Copy results</button>
+          <button type="button" id="copyLinks" class="clipboard btn btn-outline-success" style="display: none" data-bind="attr: {'data-clipboard-text': copyAll()}, visible: true">Copy results</button>
           <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
           <button type="button" id="revealSantas" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hideLinks">Reveal who got who</button>
           <!-- /ko -->
