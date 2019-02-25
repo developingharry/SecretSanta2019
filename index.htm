@@ -42,7 +42,8 @@
         </div>
     </section>
     <!-- end of instructions section -->
-
+    <!-- clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
 
 
@@ -123,15 +124,15 @@
             <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
             <thead>
               <tr>
-               <th scope="col">Secret Links</th>
+               <th scope="col">Secret Links (click to copy)</th>
             </thead>
             <tbody data-bind="foreach:santas">
               <tr>
-                  <td data-bind=" attr: {id: $index},
-                                  text:'Click here to copy ' + name() + '\'s link', 
-                                  click: function(data, event) { copyUrl(event) }">
+                  <td class="clipboard" data-bind=" attr: {id: $index, 'data-clipboard-text': secretUrl()},
+                                                    text: name() + '\'s link'">
                   </td>
-              </tr>         
+
+             </tr>         
             </tbody>
             <!-- /ko -->
           </table>
@@ -169,7 +170,12 @@
       </div>
     </section>
     <!-- /ko -->
-
+    <section class="container">
+    <div class="row">
+      <div class="col">
+        <div id="successpop" class="alert alert-success" style="display: none" role="alert">Copied!</div>
+      </div>
+    </div>  
     <!-- jQuery, Knockout and Bootstrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>

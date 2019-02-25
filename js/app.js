@@ -340,6 +340,19 @@ var ViewModel = function() {
             return budget;
         }
     }
+
+    self.clipboard= new ClipboardJS('.clipboard');
+
+    self.clipboard.on('success', function(e) {
+        console.log(e);
+        $('#successpop').show();
+        setTimeout(function(){ $('#successpop').hide(); }, 1000);
+    });
+    
+    self.clipboard.on('error', function(e) {
+        console.log(e);
+    });
+
 };
 
 ko.applyBindings(new ViewModel());
