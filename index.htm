@@ -25,6 +25,11 @@
         <header id="splashHeader" class="col">Secret Santa Maker 3.0</header>
       </div>
       <div class="row">
+        <div class="mx-auto col-5">
+          <img class="hollypic" src="img/holly.png">
+        </div>
+      </div>
+      <div class="row">
         <div class="col">
           <p id="setupIntro">To set up a Secret Santa event for your office/apartment/club:</p>
           <ol id="instructionsList">
@@ -35,7 +40,12 @@
         </div>
       </div>
       <div class="row">
-          <div class="col">
+        <div class="col-6 mx-auto">
+          <img class="santaface" src="img/santa.png">         
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-6 mx-auto">
             <!-- inline jQuery used here instead of knockout, to avoid conflict between bootstrap and knockout -->
             <button type="button" id="startButton" class="btn btn-outline-success" data-bind="click: hideInstructions">Get Started</button>
           </div>
@@ -124,10 +134,10 @@
             <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
             <tbody data-bind="foreach:santas">
               <tr>
-                  <td class="clipboard" data-bind=" attr: {id: $index, 'data-clipboard-text': secretUrl()},
-                                                    text: name() + '\'s link' + ' (click to copy)'">
+                  <td class="noborder">
+                    <button class="btn btn-outline-success" data-bind="attr: {'data-clipboard-text': secretUrl()}, text: name() +  '\'s link (Click to Copy)'">
+                    </button>
                   </td>
-
              </tr>         
             </tbody>
             <!-- /ko -->
@@ -135,16 +145,16 @@
         </div>
       </div>
       <nav class="row" id="resultsButtons" data-bind="visible: finished() && doneEditing()">
-        <div class="col">
-          <button type="button" id="copyLinks" class="clipboard btn btn-outline-success" style="display: none" data-bind="attr: {'data-clipboard-text': copyAll()}, visible: true">Copy results</button>
+        <div class="col mx-auto">
+          <button type="button" id="copyLinks" class="clipboard btn btn-outline-success" style="display: none" data-bind="attr: {'data-clipboard-text': copyAll()}, visible: true">Copy all</button>
           <!-- ko if: finished() && doneEditing() && resultsOption() == 'hideResults' -->
-          <button type="button" id="revealSantas" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hideLinks">Reveal who got who</button>
+          <button type="button" id="revealSantas" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hideLinks">Who got who?</button>
           <!-- /ko -->
           <!-- ko if: finished() && doneEditing() && resultsOption() == 'showResults' -->
-          <button type="button" id="showLinks" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: showLinks">Get Links to Share</button>
+          <button type="button" id="showLinks" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: showLinks">Show Links</button>
           <!-- /ko -->
           <button type="button" id="restart" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: softRestart">Go Back</button>
-          <button type="button" id="restart" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hardRestart">Start from Scratch</button>
+          <button type="button" id="restart" class="btn btn-outline-success" style="display: none" data-bind="visible: true, click: hardRestart">Start over</button>
           
         </div>
       </nav>
@@ -153,11 +163,14 @@
     <!-- ko if: secretData() -->
     <section class="container" id="secretPage">
       <div class="row">
-        <div class="col speech-bubble sb-pointer">
-          <div id="secretText">
-            Hey <span data-bind="text: santaData()"></span>! Your Secret Santa recipient is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!
+        <div class="col">
+          <div class="speech-bubble sb-pointer">
+            <div id="secretText">
+              Hey <span data-bind="text: santaData()"></span>! Your Secret Santa recipient is <span data-bind="text: gifteeData()"></span>, and the budget is <span data-bind="text: showBudget()"></span>!<br>Merry Xmas!
+            </div>
           </div>
         </div>
+
       </div>
       <div class="row">
         <div class="col">
@@ -170,6 +183,9 @@
     <div class="row">
       <div class="col">
         <div id="successpop" class="alert alert-success" style="display: none" role="alert">Copied!</div>
+      </div>
+      <div id="dupePop" class="alert alert-danger" style="display: none" role="alert">
+        "Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?"
       </div>
     </div>  
     <!-- jQuery, Knockout and Bootstrap-->

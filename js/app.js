@@ -325,7 +325,9 @@ var ViewModel = function() {
             self.santaChange(false);
             $('#entryform').hide();
         } else {
-            alert("Sorry, I found two or more matching names in there.  Maybe add the surname to avoid confusion?")
+            // TODO: make this a fancy alert
+            $('#dupePop').show();
+            setTimeout(function(){ $('#dupePop').hide(); }, 8000);
         };
     }
 
